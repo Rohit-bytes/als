@@ -12,7 +12,7 @@ class CustomTrackers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 60.h,
+      height: 60.h,
       width: 110.w,
       decoration: BoxDecoration(
         color: color ?? ColorPalette.primary,
@@ -25,7 +25,14 @@ class CustomTrackers extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomText(title ?? "4"),
+            CustomText(
+              title ?? "4",
+              style: TextStyle(
+                color: ColorPalette.white,
+                fontSize: 12.w,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             Text(
               subtitle ?? "Classes",
               style: TextStyle(
