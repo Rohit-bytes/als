@@ -6,6 +6,9 @@ import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_color_button.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_title_anchor.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_trackers.dart';
+import 'package:als/home/homepage.dart';
+import 'package:als/main.dart';
+import 'package:als/viewmodel/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,102 +18,37 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorPalette.background,
-      appBar: CustomAppBar(
-        leadingwidget: Icon(Icons.menu),
-        title: "",
-        showBackButton: false,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Container(
-              height: 40.h,
-              width: 40.w,
-              child: CustomCircleButton(
-                icon: Icons.person,
-                iconsize: 16,
-                onPressed: () {},
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
-        child: Column(
-          children: [
-            Row(children: [CustomText("Hello,\n${"Mr. "}${"John Doe"} 👋")]),
-            Row(children: [Text("Let's Make Today Productive!")]),
-            SizedBox(height: 10.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomTrackers(
-                  color: ColorPalette.primaryLight,
-                  title: "4",
-                  subtitle: "Classes".tr,
-                ),
-                CustomTrackers(
-                  color: ColorPalette.Green,
-                  title: "128",
-                  subtitle: 'Students'.tr,
-                ),
-                CustomTrackers(
-                  color: ColorPalette.creme,
-                  title: "92%",
-                  subtitle: "Avg. Attendance",
-                ),
-              ],
-            ),
-            SizedBox(height: 10.h),
-            CustomTitleAnchor(
-              title: "Classes".tr,
-              widget: Row(
-                children: [
-                  CustomColorButton(title: "+ Add Class", onpress: () {}),
-                  SizedBox(width: 5.w),
-                  CustomColorButton(title: "Show All", onpress: () {}),
-                ],
-              ),
-            ),
-            Container(
-              height: 300.h,
-              // color: Colors.amber,
-              child: GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.only(bottom: 20.h),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12.w,
-                  mainAxisSpacing: 12.h,
-                  childAspectRatio: 1.05,
-                ),
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return ClassesHomepage(
-                    title: "MCA Sem(1)",
-                    subtitle: "120",
-                    onpress: () {
-                      // Open class
-                      print(index);
+    return GetBuilder<AuthController>(
+      builder: (authController) {
+        return Scaffold(
+          appBar: CustomAppBar(
+            leadingwidget: Icon(Icons.menu),
+            title: "${authController.user?.userMetadata?["name"] ?? "user"}",
+            showBackButton: false,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Container(
+                  height: 40.h,
+                  width: 40.w,
+                  child: CustomCircleButton(
+                    icon: Icons.person,
+                    iconsize: 16,
+                    onPressed: () {
+                      supabase.auth.signOut();
                     },
-                  );
-                },
+                  ),
+                ),
               ),
-            ),
-            // SizedBox(height: 10.h),
-            CustomTitleAnchor(
-              title: "Today's Schedule",
-              widget: Row(
-                children: [
-                  TextButton(child: Text("View All"), onPressed: () {}),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            child: PageView(children: [Homepage()]),
+          ),
+        );
+      },
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
+import 'package:als/main.dart';
 import 'package:als/viewmodel/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +30,11 @@ class _SplashScreenState extends State<SplashScreen>
     )..repeat(reverse: true);
 
     Timer(const Duration(seconds: 3), () {
-      Get.offNamed(AppRoutes.choose_role);
+      if (supabase.auth.currentUser == null) {
+        Get.offNamed(AppRoutes.chooserole);
+      } else {
+        Get.offAllNamed(AppRoutes.landingpage);
+      }
     });
   }
 

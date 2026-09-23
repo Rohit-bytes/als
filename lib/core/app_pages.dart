@@ -16,7 +16,7 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
-      name: AppRoutes.choose_role,
+      name: AppRoutes.chooserole,
       page: () => const ChooseRole(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
