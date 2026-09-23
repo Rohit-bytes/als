@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/main.dart';
+import 'package:als/viewmodel/auth_controller.dart';
 import 'package:als/viewmodel/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,10 +30,13 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 4),
     )..repeat(reverse: true);
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () async {
       if (supabase.auth.currentUser == null) {
         Get.offNamed(AppRoutes.chooserole);
       } else {
+        final authController = Get.find<AuthController>();
+        await authController.getUserDetails();
+
         Get.offAllNamed(AppRoutes.landingpage);
       }
     });

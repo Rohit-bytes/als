@@ -109,8 +109,8 @@ class _TeacherLoginState extends State<TeacherLogin> {
                       },
                       child: Icon(
                         authController.isobsecure
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
                         color: Color(0xFF7D899F),
                         size: 22,
                       ),

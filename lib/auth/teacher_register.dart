@@ -74,7 +74,7 @@ class TeacherRegister extends StatelessWidget {
                     errorText: authController.nameError,
                     controller: authController.regnamecontrol,
                     hint: "Enter Your Name".tr,
-                    prefixIcon: Icons.email_outlined,
+                    prefixIcon: Icons.person,
                   ),
                   SizedBox(height: 10.h),
                   CustomTextField(
@@ -111,20 +111,20 @@ class TeacherRegister extends StatelessWidget {
 
                   SizedBox(height: 10.h),
 
-                  CustomButton(
-                    title: "Sign Up",
-                    callback: () {
-                      authController.isLoading == true
-                          ? CircularProgressIndicator()
-                          : authController.signupCheck(
+                  authController.isLoading == true
+                      ? CircularProgressIndicator()
+                      : CustomButton(
+                          title: "Sign Up",
+                          callback: () {
+                            authController.signupCheck(
                               authController.regnamecontrol.text.trim(),
                               authController.regEnrollNumcontrol.text.trim(),
                               authController.regEmailcontrol.text.trim(),
                               authController.regpasscontrol.text.trim(),
                               authController.regreppasscontrol.text.trim(),
                             );
-                    },
-                  ),
+                          },
+                        ),
                 ],
               ),
             ),

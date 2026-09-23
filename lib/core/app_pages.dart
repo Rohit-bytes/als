@@ -2,6 +2,7 @@ import 'package:als/auth/choose_role.dart';
 import 'package:als/auth/teacher_login.dart';
 import 'package:als/auth/splash_screen.dart';
 import 'package:als/auth/teacher_register.dart';
+import 'package:als/home/add_classess.dart';
 import 'package:als/home/landing_page.dart';
 import 'package:get/get.dart';
 
@@ -36,6 +37,12 @@ class AppPages {
     GetPage(
       name: AppRoutes.landingpage,
       page: () => const LandingPage(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.addclass,
+      page: () => const AddClassess(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
