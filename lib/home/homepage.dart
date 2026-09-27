@@ -25,89 +25,100 @@ class Homepage extends StatelessWidget {
           builder: (authController) {
             return Scaffold(
               backgroundColor: ColorPalette.background,
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        CustomText(
-                          "Hello,\n${authController.userDetails?.name ?? "User"} 👋",
-                        ),
-                      ],
-                    ),
-                    Row(children: [Text("Let's Make Today Productive!")]),
-                    SizedBox(height: 10.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomTrackers(
-                          color: ColorPalette.primaryLight,
-                          title: "0",
-                          subtitle: "Classes".tr,
-                        ),
-                        CustomTrackers(
-                          color: ColorPalette.Green,
-                          title: "0",
-                          subtitle: 'Students'.tr,
-                        ),
-                        CustomTrackers(
-                          color: ColorPalette.creme,
-                          title: "100%",
-                          subtitle: "Avg. Attendance",
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10.h),
-                    CustomTitleAnchor(
-                      title: "Classes".tr,
-                      widget: Row(
+              body: RefreshIndicator(
+                onRefresh: () async {
+                  return await homeController.getClasses();
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
-                          CustomColorButton(
-                            title: "+ Add Class",
-                            onpress: () {
-                              Get.toNamed(AppRoutes.addclass);
-                            },
+                          CustomText(
+                            "Hello,\n${authController.userDetails?.name ?? "User"} 👋",
                           ),
-                          SizedBox(width: 5.w),
-                          CustomColorButton(title: "Show All", onpress: () {}),
                         ],
                       ),
-                    ),
-                    Container(
-                      height: 300.h,
-                      // color: Colors.amber,
-                      child: GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.only(bottom: 20.h),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12.w,
-                          mainAxisSpacing: 12.h,
-                          childAspectRatio: 1.05,
-                        ),
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return ClassesHomepage(
-                            title: "MCA Sem(1)",
-                            subtitle: "120",
-                            onpress: () {
-                              // Open class
-                              print(index);
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    // SizedBox(height: 10.h),
-                    CustomTitleAnchor(
-                      title: "Today's Schedule",
-                      widget: Row(
+                      Row(children: [Text("Let's Make Today Productive!")]),
+                      SizedBox(height: 10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton(child: Text("View All"), onPressed: () {}),
+                          CustomTrackers(
+                            color: ColorPalette.primaryLight,
+                            title: "0",
+                            subtitle: "Classes".tr,
+                          ),
+                          CustomTrackers(
+                            color: ColorPalette.Green,
+                            title: "0",
+                            subtitle: 'Students'.tr,
+                          ),
+                          CustomTrackers(
+                            color: ColorPalette.creme,
+                            title: "100%",
+                            subtitle: "Avg. Attendance",
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 10.h),
+                      CustomTitleAnchor(
+                        title: "Classes".tr,
+                        widget: Row(
+                          children: [
+                            CustomColorButton(
+                              title: "+ Add Class",
+                              onpress: () {
+                                Get.toNamed(AppRoutes.addclass);
+                              },
+                            ),
+                            SizedBox(width: 5.w),
+                            CustomColorButton(
+                              title: "Show All",
+                              onpress: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 300.h,
+                        child: GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.only(bottom: 20.h),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 12.w,
+                                mainAxisSpacing: 12.h,
+                                childAspectRatio: 1.05,
+                              ),
+                          itemCount: homeController.classes.length,
+                          itemBuilder: (context, index) {
+                            return ClassesHomepage(
+                              title:
+                                  "${homeController.classes[index]["class_name"]}",
+                              subtitle: "120",
+                              onpress: () {
+                                print(index);
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      // SizedBox(height: 10.h),
+                      CustomTitleAnchor(
+                        title: "Today's Schedule",
+                        widget: Row(
+                          children: [
+                            TextButton(
+                              child: Text("View All"),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

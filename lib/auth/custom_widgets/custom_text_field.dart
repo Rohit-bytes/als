@@ -39,8 +39,8 @@ class CustomTextField extends StatelessWidget {
 
         prefixIcon: Icon(
           prefixIcon,
-          color: hasError ? Colors.red : const Color(0xFF1F2937),
-          size: 22,
+          color: hasError ? Colors.red : const Color(0xFF40527A),
+          size: 28,
         ),
 
         suffixIcon: suffixicon ?? null,

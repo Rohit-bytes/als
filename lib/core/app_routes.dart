@@ -6,4 +6,5 @@ class AppRoutes {
   static const String chooserole = '/chooseRole';
   static const String landingpage = '/landingpage';
   static const String addclass = '/addclass';
+  static const String addclasssuccesful = '/addclasssuccesful';
 }

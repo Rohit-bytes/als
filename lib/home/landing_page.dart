@@ -1,4 +1,5 @@
 import 'package:als/auth/custom_widgets/custom_circle_button.dart';
+import 'package:als/core/color_pallete.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
 import 'package:als/home/homepage.dart';
 import 'package:als/main.dart';
@@ -18,6 +19,7 @@ class LandingPage extends StatelessWidget {
         return GetBuilder<AuthController>(
           builder: (authController) {
             return Scaffold(
+              backgroundColor: ColorPalette.background,
               appBar: CustomAppBar(
                 leadingwidget: Icon(Icons.menu),
                 title: "",

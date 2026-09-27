@@ -44,10 +44,14 @@ class ClassesHomepage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "$title",
-                    style: Theme.of(context).textTheme.bodyMedium
-                        ?.copyWith(color: ColorPalette.white),
+                  Expanded(
+                    child: Text(
+                      "$title",
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: ColorPalette.white,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
                   Icon(Icons.arrow_right, color: ColorPalette.white),
                 ],
