@@ -1,12 +1,22 @@
 import 'package:als/core/color_pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ClassesHomepage extends StatelessWidget {
   final String? title;
   final VoidCallback onpress;
   final String? subtitle;
-  const new({super.key, this.title, required this.onpress, this.subtitle});
+  final Color? color;
+  final IconData? icons;
+  const new({
+    super.key,
+    this.title,
+    required this.onpress,
+    this.subtitle,
+    this.icons,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +28,7 @@ class ClassesHomepage extends StatelessWidget {
         height: 30.h,
         width: 80.w,
         decoration: BoxDecoration(
-          color: ColorPalette.primary,
+          color: Color.lerp(color, Colors.white, 0.7) ?? ColorPalette.primary,
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: Padding(
@@ -31,12 +41,19 @@ class ClassesHomepage extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: ColorPalette.primaryLight,
+                      color:
+                          Color.lerp(color, Colors.white, 0.4) ??
+                          ColorPalette.primaryLight,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     width: 80,
                     height: 80,
-                    child: Icon(Icons.group, color: ColorPalette.background),
+                    child: Icon(
+                      size: 50,
+                      icons ?? Icons.group,
+
+                      color: color ?? ColorPalette.background,
+                    ),
                   ),
                 ],
               ),
@@ -46,14 +63,21 @@ class ClassesHomepage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "$title",
+                      (title ?? '').capitalize?.capitalizeFirst ?? '',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: ColorPalette.white,
+                        fontWeight: FontWeight.w800,
+
+                        fontSize: 14,
+                        color: ColorPalette.textPrimary,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),
-                  Icon(Icons.arrow_right, color: ColorPalette.white),
+                  Icon(
+                    Icons.arrow_right,
+                    color: ColorPalette.textPrimary,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ],
               ),
               Row(
@@ -61,8 +85,10 @@ class ClassesHomepage extends StatelessWidget {
                 children: [
                   Text(
                     "$subtitle students",
-                    style: Theme.of(context).textTheme.bodyMedium
-                        ?.copyWith(color: ColorPalette.white),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: ColorPalette.textSecondary,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),

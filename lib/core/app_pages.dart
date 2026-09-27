@@ -5,6 +5,7 @@ import 'package:als/auth/teacher_register.dart';
 import 'package:als/home/add_class/add_classess.dart';
 import 'package:als/home/add_class/class_add_succesfully.dart';
 import 'package:als/home/landing_page.dart';
+import 'package:als/home/view_all_classes.dart';
 import 'package:get/get.dart';
 
 import 'app_routes.dart';
@@ -50,6 +51,12 @@ class AppPages {
     GetPage(
       name: AppRoutes.addclasssuccesful,
       page: () => const ClassAddSuccesfully(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.viewallclasses,
+      page: () => const ViewAllClasses(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

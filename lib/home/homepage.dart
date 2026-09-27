@@ -75,36 +75,53 @@ class Homepage extends StatelessWidget {
                             SizedBox(width: 5.w),
                             CustomColorButton(
                               title: "Show All",
-                              onpress: () {},
+                              onpress: () {
+                                Get.toNamed(AppRoutes.viewallclasses);
+                              },
                             ),
                           ],
                         ),
                       ),
-                      Container(
-                        height: 300.h,
-                        child: GridView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.only(bottom: 20.h),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 12.w,
-                                mainAxisSpacing: 12.h,
-                                childAspectRatio: 1.05,
+                      homeController.classes.length == 0
+                          ? SizedBox(
+                              height: 180.h,
+                              // width: 250.w,
+                              child: Image.asset("assets/addClass.png"),
+                            )
+                          : Container(
+                              height: 300.h,
+                              child: GridView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.only(bottom: 20.h),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 12.w,
+                                      mainAxisSpacing: 12.h,
+                                      childAspectRatio: 1.05,
+                                    ),
+                                itemCount: homeController.classes.length > 4
+                                    ? 4
+                                    : homeController.classes.length,
+                                itemBuilder: (context, index) {
+                                  return ClassesHomepage(
+                                    icons: homeController.getCourseIcon(
+                                      homeController.classes[index]["course"],
+                                    ),
+
+                                    color: homeController.getCourseColor(
+                                      homeController.classes[index]["course"],
+                                    ),
+                                    title:
+                                        "${homeController.classes[index]["class_name"]}",
+                                    subtitle: "120",
+                                    onpress: () {
+                                      print(index);
+                                    },
+                                  );
+                                },
                               ),
-                          itemCount: homeController.classes.length,
-                          itemBuilder: (context, index) {
-                            return ClassesHomepage(
-                              title:
-                                  "${homeController.classes[index]["class_name"]}",
-                              subtitle: "120",
-                              onpress: () {
-                                print(index);
-                              },
-                            );
-                          },
-                        ),
-                      ),
+                            ),
                       // SizedBox(height: 10.h),
                       CustomTitleAnchor(
                         title: "Today's Schedule",

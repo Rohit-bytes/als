@@ -1,8 +1,10 @@
 import 'package:als/auth/custom_widgets/custom_snackbar.dart';
 import 'package:als/core/app_routes.dart';
+import 'package:als/core/color_pallete.dart';
 import 'package:als/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeController extends GetxController {
   int currentIndex = 0;
@@ -17,6 +19,13 @@ class HomeController extends GetxController {
     getCourses();
     getSemester();
     getClasses();
+    listenToClasses();
+  }
+
+  @override
+  void onClose() {
+    supabase.removeChannel(classChannel);
+    super.onClose();
   }
 
   // Bottom navigation
@@ -60,6 +69,24 @@ class HomeController extends GetxController {
     } catch (e) {
       print('ERROR: $e');
     }
+  }
+
+  late final RealtimeChannel classChannel;
+
+  void listenToClasses() {
+    classChannel = supabase
+        .channel('new_class_changes')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: 'new_class',
+          callback: (payload) {
+            print("Class table changed: ${payload.eventType}");
+
+            getClasses();
+          },
+        )
+        .subscribe();
   }
 
   bool isloading = false;
@@ -131,5 +158,31 @@ class HomeController extends GetxController {
     update();
 
     return isValid;
+  }
+
+  IconData getCourseIcon(String? course) {
+    switch (course) {
+      case "MCA":
+        return Icons.school;
+
+      case "BTECH":
+        return Icons.note;
+
+      default:
+        return Icons.people;
+    }
+  }
+
+  Color getCourseColor(String? course) {
+    switch (course) {
+      case "MCA":
+        return ColorPalette.orange;
+
+      case "BTECH":
+        return ColorPalette.Green;
+
+      default:
+        return ColorPalette.accent;
+    }
   }
 }

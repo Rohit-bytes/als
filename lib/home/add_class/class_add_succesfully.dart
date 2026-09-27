@@ -1,5 +1,6 @@
 import 'package:als/auth/custom_widgets/custom_button.dart';
 import 'package:als/auth/custom_widgets/custom_button_two.dart';
+import 'package:als/auth/custom_widgets/custom_circle_button.dart';
 import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/home/add_class/class_widget.dart';
@@ -19,7 +20,20 @@ class ClassAddSuccesfully extends StatelessWidget {
         return Scaffold(
           backgroundColor: ColorPalette.background,
 
-          appBar: CustomAppBar(title: ""),
+          appBar: CustomAppBar(
+            title: "",
+            showBackButton: false,
+            actions: [
+              CustomCircleButton(
+                icon: Icons.clear,
+                iconsize: 18,
+                onPressed: () {
+                  Get.offAllNamed(AppRoutes.landingpage);
+                },
+              ),
+            ],
+            leadingwidget: SizedBox(),
+          ),
 
           body: SafeArea(
             child: SingleChildScrollView(
@@ -59,7 +73,8 @@ class ClassAddSuccesfully extends StatelessWidget {
                     SizedBox(height: 25.h),
 
                     ClassWidget(
-                      courseName: "${homeController.classNamecontrol.text}",
+                      courseName:
+                          "${homeController.classNamecontrol.text.trim()}",
                     ),
 
                     SizedBox(height: 20.h),
