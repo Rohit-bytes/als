@@ -89,7 +89,7 @@ class Homepage extends StatelessWidget {
                               child: Image.asset("assets/addClass.png"),
                             )
                           : Container(
-                              height: 300.h,
+                              constraints: BoxConstraints(minHeight: 300.h),
                               child: GridView.builder(
                                 physics: NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.only(bottom: 20.h),

@@ -221,6 +221,7 @@ class AuthController extends GetxController {
         e.message,
         snackPosition: SnackPosition.BOTTOM,
       );
+      print(e);
     } catch (e) {
       print(e);
       Get.snackbar(

@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:als/auth/custom_widgets/custom_snackbar.dart';
 import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/main.dart';
+import 'package:excel/excel.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -185,4 +189,46 @@ class HomeController extends GetxController {
         return ColorPalette.accent;
     }
   }
+
+  //class tab
+
+  int tabIndex = 0;
+  void tabchange(int index) {
+    tabIndex = index;
+    update();
+  }
+
+  //excel file picker
+
+  // Future<void> pickExcelFile() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //     type: FileType.custom,
+  //     allowedExtensions: ['xlsx', 'xls'],
+  //     withData: true,
+  //   );
+
+  //   if (result == null) {
+  //     return;
+  //   }
+
+  //   Uint8List? bytes = result.files.single.bytes;
+
+  //   if (bytes == null) {
+  //     return;
+  //   }
+
+  //   final excel = Excel.decodeBytes(bytes);
+
+  //   for (var table in excel.tables.keys) {
+  //     print("Sheet: $table");
+
+  //     final sheet = excel.tables[table];
+
+  //     if (sheet == null) continue;
+
+  //     for (var row in sheet.rows) {
+  //       print(row.map((cell) => cell?.value).toList());
+  //     }
+  //   }
+  // }
 }

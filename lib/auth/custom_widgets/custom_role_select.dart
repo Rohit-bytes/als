@@ -23,7 +23,7 @@ class CustomRoleSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180.h,
+      // height: 180.h,
       width: double.infinity,
       decoration: BoxDecoration(
         color: isstudent ? ColorPalette.accent : ColorPalette.primaryLight,

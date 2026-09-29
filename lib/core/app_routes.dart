@@ -8,4 +8,5 @@ class AppRoutes {
   static const String addclass = '/addclass';
   static const String viewallclasses = '/viewallclasses';
   static const String addclasssuccesful = '/addclasssuccesful';
+  static const String uploadexcelsheet = '/uploadexcelsheet';
 }

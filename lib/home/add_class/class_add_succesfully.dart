@@ -26,7 +26,7 @@ class ClassAddSuccesfully extends StatelessWidget {
             actions: [
               CustomCircleButton(
                 icon: Icons.clear,
-                iconsize: 18,
+                iconsize: 22,
                 onPressed: () {
                   Get.offAllNamed(AppRoutes.landingpage);
                 },
@@ -93,7 +93,7 @@ class ClassAddSuccesfully extends StatelessWidget {
                   CustomButton(
                     title: "Add Student Now",
                     callback: () {
-                      // Navigate to Add Student screen
+                      Get.toNamed(AppRoutes.uploadexcelsheet);
                     },
                   ),
 

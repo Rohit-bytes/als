@@ -26,7 +26,10 @@ class LandingPage extends StatelessWidget {
                 showBackButton: false,
                 actions: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 8,
+                    ),
                     child: Container(
                       height: 40.h,
                       width: 40.w,
@@ -34,7 +37,7 @@ class LandingPage extends StatelessWidget {
                         icon: Icons.person,
                         iconsize: 16,
                         onPressed: () {
-                          supabase.auth.signOut();
+                          // supabase.auth.signOut();
                         },
                       ),
                     ),

@@ -1,0 +1,43 @@
+import 'package:als/auth/custom_widgets/custom_button.dart';
+import 'package:als/auth/custom_widgets/custom_button_two.dart';
+import 'package:als/core/color_pallete.dart';
+import 'package:als/viewmodel/home_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+class StudentTab extends StatelessWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Icon(Icons.groups, size: 300, color: ColorPalette.primaryLight),
+          Text(
+            "No Student added yet",
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: 20,
+              color: ColorPalette.black,
+            ),
+          ),
+          Text(
+            textAlign: TextAlign.center,
+            style: TextStyle(),
+            "Add students to start taking attendance\nfor this class",
+          ),
+          SizedBox(height: 20.h),
+          CustomButton(
+            title: "Upload Excel Sheet",
+            callback: () {
+              final homeController = Get.find<HomeController>();
+              // homeController.pickExcelFile();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
