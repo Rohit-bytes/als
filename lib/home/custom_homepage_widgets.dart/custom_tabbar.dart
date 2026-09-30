@@ -71,7 +71,7 @@ class _ClassTab extends StatelessWidget {
               child: AnimatedDefaultTextStyle(
                 duration: const Duration(milliseconds: 180),
                 style: TextStyle(
-                  fontSize: 15.sp,
+                  fontSize: 15,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                   color: isSelected
                       ? const Color(0xFF2379ED)

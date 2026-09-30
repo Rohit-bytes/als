@@ -14,6 +14,12 @@ class UploadExcelSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> newClass = Get.arguments;
+
+    // String course = newClass['course'];
+    String semester = newClass['semester'];
+    String className = newClass['class_name'];
+
     return GetBuilder<HomeController>(
       builder: (homeController) {
         return Scaffold(
@@ -27,24 +33,24 @@ class UploadExcelSheet extends StatelessWidget {
                 children: [
                   // ================= CLASS HEADER =================
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        height: 80.h,
-                        width: 80.w,
+                        height: 80,
+                        width: 80,
                         decoration: BoxDecoration(
                           color: Color.lerp(
                             ColorPalette.background,
                             Colors.white,
                             0.5,
                           ),
-                          borderRadius: BorderRadius.circular(20.r),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.school_sharp,
                             color: Colors.blue,
-                            size: 60.sp,
+                            size: 60,
                           ),
                         ),
                       ),
@@ -56,19 +62,19 @@ class UploadExcelSheet extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              homeController.classNamecontrol.text.trim(),
+                              className.toString(),
                               style: TextStyle(
                                 color: ColorPalette.textPrimary,
-                                fontSize: 18.sp,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
 
                             Text(
-                              homeController.finalcourseName ?? "Not Found",
+                              semester.toString(),
                               style: TextStyle(
                                 color: ColorPalette.textSecondary,
-                                fontSize: 18.sp,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),

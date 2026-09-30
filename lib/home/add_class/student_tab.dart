@@ -1,5 +1,6 @@
 import 'package:als/auth/custom_widgets/custom_button.dart';
 import 'package:als/auth/custom_widgets/custom_button_two.dart';
+import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,10 @@ class StudentTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
+
+    final classId = args['id'];
+
     return Center(
       child: Column(
         children: [
@@ -33,7 +38,17 @@ class StudentTab extends StatelessWidget {
             title: "Upload Excel Sheet",
             callback: () {
               final homeController = Get.find<HomeController>();
-              // homeController.pickExcelFile();
+              homeController.pickexcelfile();
+            },
+          ),
+          SizedBox(height: 10.h),
+          CustomButtonTwo(
+            title: "Manual Entry",
+            callback: () {
+              Get.toNamed(
+                AppRoutes.enterStudentManually,
+                arguments: {'id': classId},
+              );
             },
           ),
         ],

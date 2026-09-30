@@ -89,7 +89,8 @@ class Homepage extends StatelessWidget {
                               child: Image.asset("assets/addClass.png"),
                             )
                           : Container(
-                              constraints: BoxConstraints(minHeight: 300.h),
+                              height: 300.h,
+                              // constraints: BoxConstraints(minHeight: 300.h),
                               child: GridView.builder(
                                 physics: NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.only(bottom: 20.h),
@@ -116,6 +117,21 @@ class Homepage extends StatelessWidget {
                                         "${homeController.classes[index]["class_name"]}",
                                     subtitle: "120",
                                     onpress: () {
+                                      print(
+                                        "${homeController.classes[index]["class_name"]}",
+                                      );
+                                      print(
+                                        "${homeController.classes[index]["semester"]}",
+                                      );
+                                      Get.toNamed(
+                                        AppRoutes.uploadexcelsheet,
+                                        arguments: {
+                                          'semester':
+                                              "${homeController.classes[index]["semester"]}",
+                                          'class_name':
+                                              "${homeController.classes[index]["class_name"]}",
+                                        },
+                                      );
                                       print(index);
                                     },
                                   );

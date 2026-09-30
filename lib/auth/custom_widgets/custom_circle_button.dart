@@ -28,7 +28,11 @@ class CustomCircleButton extends StatelessWidget {
           padding: EdgeInsets.zero,
         ),
         child: Center(
-          child: Icon(icon ?? Icons.arrow_forward, size: iconsize ?? 28.w),
+          child: Icon(
+            icon ?? Icons.arrow_forward,
+            size: iconsize ?? 28,
+            weight: 300,
+          ),
         ),
       ),
     );

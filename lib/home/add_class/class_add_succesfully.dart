@@ -15,6 +15,13 @@ class ClassAddSuccesfully extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> newClass = Get.arguments;
+    String id = newClass['id'];
+    String course = newClass['course'];
+
+    String semester = newClass['semester'];
+    String className = newClass['class_name'];
+
     return GetBuilder<HomeController>(
       builder: (homeController) {
         return Scaffold(
@@ -72,10 +79,7 @@ class ClassAddSuccesfully extends StatelessWidget {
 
                     SizedBox(height: 25.h),
 
-                    ClassWidget(
-                      courseName:
-                          "${homeController.classNamecontrol.text.trim()}",
-                    ),
+                    ClassWidget(courseName: course),
 
                     SizedBox(height: 20.h),
                   ],
@@ -93,7 +97,14 @@ class ClassAddSuccesfully extends StatelessWidget {
                   CustomButton(
                     title: "Add Student Now",
                     callback: () {
-                      Get.toNamed(AppRoutes.uploadexcelsheet);
+                      Get.toNamed(
+                        AppRoutes.uploadexcelsheet,
+                        arguments: {
+                          'id': id,
+                          'semester': semester,
+                          'class_name': className,
+                        },
+                      );
                     },
                   ),
 

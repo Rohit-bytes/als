@@ -10,6 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'dart:typed_data';
+
+import 'package:excel/excel.dart';
+import 'package:file_picker/file_picker.dart';
+
 class HomeController extends GetxController {
   int currentIndex = 0;
 
@@ -104,16 +109,21 @@ class HomeController extends GetxController {
     try {
       isloading = true;
       update();
-      await supabase.from('new_class').insert({
-        'course': courseName,
-        'semester': semesterName,
-        'class_name': className,
-      });
+      final newClass = await supabase
+          .from('new_class')
+          .insert({
+            'course': courseName,
+            'semester': semesterName,
+            'class_name': className,
+          })
+          .select()
+          .single();
       // CustomSnackbar.success(title: "Class created", message: "Succesfully");
       // finalcourseName = "";
       // finalsemesterName = "";
       // classNamecontrol.clear();
-      Get.toNamed(AppRoutes.addclasssuccesful);
+
+      Get.toNamed(AppRoutes.addclasssuccesful, arguments: newClass);
     } catch (e) {
       print(e);
       CustomSnackbar.error(
@@ -198,37 +208,24 @@ class HomeController extends GetxController {
     update();
   }
 
-  //excel file picker
+  // excel file picker
 
-  // Future<void> pickExcelFile() async {
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //     type: FileType.custom,
-  //     allowedExtensions: ['xlsx', 'xls'],
-  //     withData: true,
-  //   );
+  Future<void> pickexcelfile() async {
+    // Pick a single file.
+    final PlatformFile? file = await FilePicker.pickFile();
+    if (file != null) {
+      print('Picked ${file.name} (${await file.length()} bytes).');
+    }
 
-  //   if (result == null) {
-  //     return;
-  //   }
+    // Pick multiple files, filtered by extension.
+    final List<PlatformFile> images = await FilePicker.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['png', 'jpg'],
+    );
+    print('Picked ${images.length} image(s).');
 
-  //   Uint8List? bytes = result.files.single.bytes;
-
-  //   if (bytes == null) {
-  //     return;
-  //   }
-
-  //   final excel = Excel.decodeBytes(bytes);
-
-  //   for (var table in excel.tables.keys) {
-  //     print("Sheet: $table");
-
-  //     final sheet = excel.tables[table];
-
-  //     if (sheet == null) continue;
-
-  //     for (var row in sheet.rows) {
-  //       print(row.map((cell) => cell?.value).toList());
-  //     }
-  //   }
-  // }
+    // Pick a directory.
+    final String? directoryPath = await FilePicker.getDirectoryPath();
+    print('Picked directory: $directoryPath');
+  }
 }
