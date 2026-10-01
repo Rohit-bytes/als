@@ -16,6 +16,21 @@ import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 
 class HomeController extends GetxController {
+  //greeting
+  String getGreeting() {
+    final hour = DateTime.now().hour;
+
+    if (hour < 12) {
+      return 'Good Morning ☀️';
+    } else if (hour < 17) {
+      return 'Good Afternoon 🌤️';
+    } else if (hour < 21) {
+      return 'Good Evening 🌇';
+    } else {
+      return 'Good Night 🌙';
+    }
+  }
+
   int currentIndex = 0;
 
   List<Map<String, dynamic>> courses = [];

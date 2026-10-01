@@ -7,11 +7,15 @@ class CustomButtonTwo extends StatelessWidget {
   final VoidCallback callback;
   final Color? color;
   final Color? textColor;
+  final double? radius;
+  final Widget? prefixwidget;
   const new({
     super.key,
     required this.title,
     required this.callback,
+    this.prefixwidget,
     this.color,
+    this.radius,
     this.textColor,
   });
 
@@ -26,16 +30,22 @@ class CustomButtonTwo extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           color: color ?? ColorPalette.white,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(radius ?? 50),
         ),
         child: Center(
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: textColor ?? ColorPalette.black,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              prefixwidget ?? SizedBox(),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: textColor ?? ColorPalette.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
       ),

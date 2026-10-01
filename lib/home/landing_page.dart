@@ -33,7 +33,9 @@ class LandingPage extends StatelessWidget {
                         ),
                       )
                     : Icon(Icons.menu),
-                title: homeController.currentIndex == 1 ? "Profile" : "",
+                title: homeController.currentIndex == 1
+                    ? "Profile"
+                    : homeController.getGreeting(),
 
                 showBackButton: false,
                 actions: [
