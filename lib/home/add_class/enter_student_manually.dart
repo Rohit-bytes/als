@@ -1,8 +1,11 @@
+import 'package:als/auth/custom_widgets/custom_button_two.dart';
 import 'package:als/auth/custom_widgets/custom_text.dart';
+import 'package:als/auth/custom_widgets/custom_text_field.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class EnterStudentManually extends StatelessWidget {
@@ -21,20 +24,38 @@ class EnterStudentManually extends StatelessWidget {
           backgroundColor: ColorPalette.background,
           appBar: CustomAppBar(title: ""),
           body: Center(
-            child: Column(
-              children: [
-                CustomText("Add Student Manually"),
-                Text("Enter student details to add to ${className}"),
-              ],
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                children: [
+                  CustomText("Add Student Manually"),
+                  Text("Enter student details to add to ${className}"),
+                  SizedBox(height: 10.h),
+                  CustomTextField(
+                    hint: "Enrollment Number",
+                    prefixIcon: Icons.numbers,
+                  ),
+                  SizedBox(height: 10.h),
+                  CustomTextField(hint: "Full Name", prefixIcon: Icons.person),
+                  SizedBox(height: 10.h),
+                  CustomTextField(
+                    hint: "Email",
+                    prefixIcon: Icons.email_outlined,
+                  ),
+                ],
+              ),
             ),
           ),
 
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: ColorPalette.primary,
-            child: Icon(Icons.add, color: ColorPalette.white),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(50),
+          bottomNavigationBar: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomButtonTwo(
+                textColor: ColorPalette.white,
+                color: ColorPalette.primary,
+                title: "Add Student",
+                callback: () {},
+              ),
             ),
           ),
         );
