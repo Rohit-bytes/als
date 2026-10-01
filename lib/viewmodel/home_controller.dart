@@ -37,9 +37,17 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
+  PageController pageController = PageController();
   // Bottom navigation
   void changeIndex(int index) {
     currentIndex = index;
+
+    pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+
     update();
   }
 

@@ -145,6 +145,9 @@ class AuthController extends GetxController {
     } else if (!GetUtils.isEmail(email.trim())) {
       signupEmailError = "Enter a valid email address";
       isValid = false;
+    } else if (!email.trim().toLowerCase().endsWith('@bvicam.in')) {
+      signupEmailError = "Use your BVICAM email address";
+      isValid = false;
     }
 
     // Password validation
@@ -173,14 +176,26 @@ class AuthController extends GetxController {
       return;
     }
 
-    await signUpUser(name, enrollno, email, password, repPassword);
+    await signUpUser(name, enrollno, email, password, repPassword, isStudent);
   }
 
   String get enrollmentNumber {
     return user?.userMetadata?['enrollNumber']?.toString() ?? '';
   }
 
-  // ================= SUPABASE SIGNUP =================
+  bool isStudent = false;
+  void changeIsStudent(bool check) {
+    isStudent = check;
+    print("isStudent is change to " + isStudent.toString());
+    update();
+  }
+
+  void toggleIsStudent() {
+    isStudent = !isStudent;
+    print("isStudent is change to " + isStudent.toString());
+    update();
+  }
+  // ================= SUPABASE TEACHER SIGNUP =================
 
   Future<void> signUpUser(
     String name,
@@ -188,6 +203,7 @@ class AuthController extends GetxController {
     String email,
     String password,
     String repPassword,
+    bool isStudent,
   ) async {
     try {
       isLoading = true;
@@ -206,12 +222,15 @@ class AuthController extends GetxController {
       }
 
       // Create profile separately
-      await supabase.from('teacher_profiles').insert({
-        'id': user.id,
-        'name': name.trim(),
-        'email': email.trim(),
-        'enrollment_number': enrollno.trim(),
-      });
+      await supabase
+          .from(isStudent == true ? "student_profiles" : "teacher_profiles")
+          .insert({
+            'id': user.id,
+            'name': name.trim(),
+            'email': email.trim(),
+            'enrollment_number': enrollno.trim(),
+            'is_student': isStudent,
+          });
       await getUserDetails();
 
       Get.offAllNamed(AppRoutes.landingpage);
@@ -237,18 +256,46 @@ class AuthController extends GetxController {
 
   //get user data
   UserDetails? userDetails;
+
   Future<void> getUserDetails() async {
     final user = supabase.auth.currentUser;
 
     if (user == null) return;
 
-    final response = await supabase
-        .from('teacher_profiles')
-        .select()
-        .eq('id', user.id)
-        .single();
+    try {
+      // First check student profile
+      final studentResponse = await supabase
+          .from('student_profiles')
+          .select()
+          .eq('id', user.id)
+          .maybeSingle();
 
-    userDetails = UserDetails.fromMap(response);
-    update();
+      if (studentResponse != null) {
+        isStudent = true;
+
+        userDetails = UserDetails.fromMap(studentResponse);
+        update();
+        return;
+      }
+
+      // If not student, check teacher profile
+      final teacherResponse = await supabase
+          .from('teacher_profiles')
+          .select()
+          .eq('id', user.id)
+          .maybeSingle();
+
+      if (teacherResponse != null) {
+        isStudent = false;
+
+        userDetails = UserDetails.fromMap(teacherResponse);
+        update();
+        return;
+      }
+
+      print("Profile not found");
+    } catch (e) {
+      print("Error getting user details: $e");
+    }
   }
 }

@@ -31,9 +31,11 @@ class _TeacherLoginState extends State<TeacherLogin> {
           appBar: AppBar(
             actions: [
               TextButton(
-                onPressed: () {},
-                child: const Text(
-                  "Switch to Student",
+                onPressed: () {
+                  authController.toggleIsStudent();
+                },
+                child: Text(
+                  "Switch to ${authController.isStudent == true ? "teacher" : "student"}",
                   style: TextStyle(fontWeight: FontWeight.w800),
                 ),
               ),
@@ -65,7 +67,9 @@ class _TeacherLoginState extends State<TeacherLogin> {
                   Row(
                     children: [
                       CustomText(
-                        "Teacher Login",
+                        authController.isStudent == true
+                            ? "Student Login"
+                            : "Teacher Login",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 30.w,
@@ -139,28 +143,31 @@ class _TeacherLoginState extends State<TeacherLogin> {
             ),
           ),
 
-          bottomNavigationBar: SafeArea(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Get.offAllNamed(AppRoutes.register);
-                  },
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Don't have an Account? ",
-                      style: TextStyle(color: ColorPalette.textSecondary),
-                      children: [
-                        TextSpan(
-                          text: "Sign Up",
-                          style: TextStyle(color: ColorPalette.primary),
-                        ),
-                      ],
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.offAllNamed(AppRoutes.register);
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Don't have an Account? ",
+                        style: TextStyle(color: ColorPalette.textSecondary),
+                        children: [
+                          TextSpan(
+                            text: "Sign Up",
+                            style: TextStyle(color: ColorPalette.primary),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

@@ -21,9 +21,11 @@ class TeacherRegister extends StatelessWidget {
           appBar: AppBar(
             actions: [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  authController.toggleIsStudent();
+                },
                 child: Text(
-                  "Switch to Student",
+                  "Switch to ${authController.isStudent == true ? "teacher" : "student"}",
                   style: TextStyle(fontWeight: FontWeight.w800),
                 ),
               ),
@@ -52,7 +54,7 @@ class TeacherRegister extends StatelessWidget {
                   Row(
                     children: [
                       CustomText(
-                        "Teacher Registration",
+                        "${authController.isStudent == true ? "Student" : "Teacher"} Registration",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 30.w,
@@ -80,7 +82,9 @@ class TeacherRegister extends StatelessWidget {
                   CustomTextField(
                     controller: authController.regEnrollNumcontrol,
                     errorText: authController.enrollNoError,
-                    hint: "Enter Enrollment Number".tr,
+                    hint:
+                        "Enter ${authController.isStudent == true ? "Enrollment" : "Employee"} Number"
+                            .tr,
                     prefixIcon: Icons.numbers,
                     isPassword: false,
                   ),
@@ -130,26 +134,29 @@ class TeacherRegister extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: SafeArea(
-            child: GestureDetector(
-              onTap: () {
-                Get.offAllNamed(AppRoutes.teacherlogin);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      text: "Don't have an Account? ",
-                      style: TextStyle(color: ColorPalette.textSecondary),
-                      children: [
-                        TextSpan(
-                          text: "Log In",
-                          style: TextStyle(color: ColorPalette.primary),
-                        ),
-                      ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Get.offAllNamed(AppRoutes.teacherlogin);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: "Don't have an Account? ",
+                        style: TextStyle(color: ColorPalette.textSecondary),
+                        children: [
+                          TextSpan(
+                            text: "Log In",
+                            style: TextStyle(color: ColorPalette.primary),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

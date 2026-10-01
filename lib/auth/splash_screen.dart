@@ -100,22 +100,25 @@ class _SplashScreenState extends State<SplashScreen>
           ),
 
           bottomNavigationBar: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(height: 10.h),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 10.h),
 
-                SizedBox(
-                  width: 120.w,
-                  child: LinearProgressIndicator(
-                    borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    width: 120.w,
+                    child: LinearProgressIndicator(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                ),
 
-                SizedBox(height: 10.h),
+                  SizedBox(height: 10.h),
 
-                Text(splashController.currentSlogan.tr),
-              ],
+                  Text(splashController.currentSlogan.tr),
+                ],
+              ),
             ),
           ),
         );
