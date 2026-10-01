@@ -16,10 +16,10 @@ class UploadExcelSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final Map<String, dynamic> newClass = Get.arguments;
 
-    // String course = newClass['course'];
+    String id = newClass['id'];
     String semester = newClass['semester'];
     String className = newClass['class_name'];
-
+    print("id " + id);
     return GetBuilder<HomeController>(
       builder: (homeController) {
         return Scaffold(
@@ -97,7 +97,7 @@ class UploadExcelSheet extends StatelessWidget {
                   SizedBox(height: 15.h),
 
                   // ================= TAB CONTENT =================
-                  _buildTab(homeController),
+                  _buildTab(homeController, newClass),
                 ],
               ),
             ),
@@ -107,11 +107,14 @@ class UploadExcelSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildTab(HomeController homeController) {
+  Widget _buildTab(
+    HomeController homeController,
+    Map<String, dynamic> newClass,
+  ) {
     switch (homeController.tabIndex) {
       // STUDENTS
       case 0:
-        return const StudentTab();
+        return StudentTab(newclass: newClass);
 
       // SUBJECTS
       case 1:
@@ -122,7 +125,7 @@ class UploadExcelSheet extends StatelessWidget {
         return AttendanceTab();
 
       default:
-        return const StudentTab();
+        return StudentTab(newclass: newClass);
     }
   }
 }

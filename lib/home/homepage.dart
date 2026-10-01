@@ -126,6 +126,8 @@ class Homepage extends StatelessWidget {
                                       Get.toNamed(
                                         AppRoutes.uploadexcelsheet,
                                         arguments: {
+                                          'id':
+                                              '${homeController.classes[index]["id"]}',
                                           'semester':
                                               "${homeController.classes[index]["semester"]}",
                                           'class_name':

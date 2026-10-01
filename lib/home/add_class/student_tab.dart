@@ -8,13 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class StudentTab extends StatelessWidget {
-  const new({super.key});
+  final Map<String, dynamic> newclass;
+  const new({super.key, required this.newclass});
 
   @override
   Widget build(BuildContext context) {
-    final args = Get.arguments;
+    // final args = Get.arguments;
 
-    final classId = args['id'];
+    // final classId = args['id'];
 
     return Center(
       child: Column(
@@ -45,10 +46,7 @@ class StudentTab extends StatelessWidget {
           CustomButtonTwo(
             title: "Manual Entry",
             callback: () {
-              Get.toNamed(
-                AppRoutes.enterStudentManually,
-                arguments: {'id': classId},
-              );
+              Get.toNamed(AppRoutes.enterStudentManually, arguments: newclass);
             },
           ),
         ],
