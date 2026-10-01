@@ -26,90 +26,90 @@ class UploadExcelSheet extends StatelessWidget {
           appBar: CustomAppBar(title: ""),
           backgroundColor: ColorPalette.background,
 
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w),
-              child: Column(
-                children: [
-                  // ================= CLASS HEADER =================
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: Color.lerp(
-                            ColorPalette.background,
-                            Colors.white,
-                            0.5,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            child: Column(
+              children: [
+                // ================= CLASS HEADER =================
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: Color.lerp(
+                          ColorPalette.background,
+                          Colors.white,
+                          0.5,
                         ),
-                        child: Center(
-                          child: Icon(
-                            Icons.school_sharp,
-                            color: Colors.blue,
-                            size: 60,
-                          ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.school_sharp,
+                          color: Colors.blue,
+                          size: 60,
                         ),
                       ),
+                    ),
 
-                      SizedBox(width: 10.w),
+                    SizedBox(width: 10.w),
 
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              className.toString(),
-                              style: TextStyle(
-                                color: ColorPalette.textPrimary,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w800,
-                              ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            className.toString(),
+                            style: TextStyle(
+                              color: ColorPalette.textPrimary,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
                             ),
+                          ),
 
-                            Text(
-                              semester.toString(),
-                              style: TextStyle(
-                                color: ColorPalette.textSecondary,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
+                          Text(
+                            semester.toString(),
+                            style: TextStyle(
+                              color: ColorPalette.textSecondary,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
 
-                  SizedBox(height: 10.h),
+                SizedBox(height: 10.h),
 
-                  // ================= TAB BAR =================
-                  ClassTabBar(
-                    selectedIndex: homeController.tabIndex,
-                    onTabChanged: (index) {
-                      homeController.tabchange(index);
-                    },
-                  ),
+                // ================= TAB BAR =================
+                ClassTabBar(
+                  selectedIndex: homeController.tabIndex,
+                  onTabChanged: (index) {
+                    homeController.tabchange(index);
+                  },
+                ),
 
-                  SizedBox(height: 15.h),
+                SizedBox(height: 15.h),
 
-                  // ================= TAB CONTENT =================
-                  _buildTab(homeController, newClass),
-                ],
-              ),
+                // ================= TAB CONTENT =================
+                _buildTab(homeController, newClass),
+              ],
             ),
           ),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {},
-          //   backgroundColor: ColorPalette.primary,
-          //   child: Icon(Icons.add, color: ColorPalette.white),
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadiusGeometry.circular(50),
-          //   ),
-          // ),
+          floatingActionButton: homeController.students.isNotEmpty
+              ? FloatingActionButton(
+                  onPressed: () {},
+                  backgroundColor: ColorPalette.primary,
+                  child: Icon(Icons.add, color: ColorPalette.white),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(50),
+                  ),
+                )
+              : null,
         );
       },
     );

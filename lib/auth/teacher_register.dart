@@ -1,5 +1,6 @@
 import 'package:als/auth/custom_widgets/custom_button.dart';
 import 'package:als/auth/custom_widgets/custom_circle_button.dart';
+import 'package:als/auth/custom_widgets/custom_radio.dart';
 import 'package:als/auth/custom_widgets/custom_text.dart';
 import 'package:als/auth/custom_widgets/custom_text_field.dart';
 import 'package:als/core/app_routes.dart';
@@ -97,6 +98,44 @@ class TeacherRegister extends StatelessWidget {
                     prefixIcon: Icons.email_outlined,
                   ),
                   SizedBox(height: 10.h),
+                  GetBuilder<AuthController>(
+                    builder: (authController) {
+                      return Row(
+                        children: [
+                          CustomRadio<String>(
+                            selectedValue: authController.gender,
+                            value: "Male",
+                            title: "Male",
+                            icon: Icons.male,
+                            onChanged: (value) {
+                              authController.toggleGender(value);
+                            },
+                          ),
+
+                          CustomRadio<String>(
+                            selectedValue: authController.gender,
+                            value: "Female",
+                            title: "Female",
+                            icon: Icons.female,
+                            onChanged: (value) {
+                              authController.toggleGender(value);
+                            },
+                          ),
+
+                          CustomRadio<String>(
+                            selectedValue: authController.gender,
+                            value: "Other",
+                            title: "Other",
+                            icon: Icons.person_outline,
+                            onChanged: (value) {
+                              authController.toggleGender(value);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  SizedBox(height: 10.h),
                   CustomTextField(
                     controller: authController.regpasscontrol,
                     errorText: authController.signupPasswordError,
@@ -126,37 +165,43 @@ class TeacherRegister extends StatelessWidget {
                               authController.regEmailcontrol.text.trim(),
                               authController.regpasscontrol.text.trim(),
                               authController.regreppasscontrol.text.trim(),
+                              authController.gender.toString(),
                             );
                           },
                         ),
-                ],
-              ),
-            ),
-          ),
-          bottomNavigationBar: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Get.offAllNamed(AppRoutes.teacherlogin);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        text: "Don't have an Account? ",
-                        style: TextStyle(color: ColorPalette.textSecondary),
-                        children: [
-                          TextSpan(
-                            text: "Log In",
-                            style: TextStyle(color: ColorPalette.primary),
-                          ),
-                        ],
+                  SizedBox(height: 10.h),
+                  SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.offAllNamed(AppRoutes.teacherlogin);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: "Don't have an Account? ",
+                                style: TextStyle(
+                                  color: ColorPalette.textSecondary,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: "Log In",
+                                    style: TextStyle(
+                                      color: ColorPalette.primary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

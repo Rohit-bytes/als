@@ -4,6 +4,7 @@ class UserDetails {
   final String email;
   final String enrollmentNumber;
   final String? section;
+  final String? gender;
   final String? profileImage;
   final String role;
 
@@ -13,6 +14,7 @@ class UserDetails {
     required this.email,
     required this.enrollmentNumber,
     this.section,
+    this.gender,
     this.profileImage,
     this.role = 'Teacher',
   });
@@ -22,6 +24,7 @@ class UserDetails {
       id: map['id']?.toString() ?? '',
       name: map['name']?.toString() ?? '',
       email: map['email']?.toString() ?? '',
+      gender: map["gender"]?.toString() ?? "",
       enrollmentNumber: map['enrollment_number']?.toString() ?? '',
       section: map['section']?.toString(),
       profileImage: map['profile_image']?.toString(),

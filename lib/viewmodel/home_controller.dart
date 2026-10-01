@@ -44,6 +44,7 @@ class HomeController extends GetxController {
     getSemester();
     getClasses();
     listenToClasses();
+    fetchAllStudent();
   }
 
   @override
@@ -250,5 +251,23 @@ class HomeController extends GetxController {
     // Pick a directory.
     final String? directoryPath = await FilePicker.getDirectoryPath();
     print('Picked directory: $directoryPath');
+  }
+
+  //fetch all student
+  List<Map<String, dynamic>> students = [];
+
+  Future<void> fetchAllStudent() async {
+    try {
+      final response = await supabase.from('student_profiles').select();
+
+      students = List<Map<String, dynamic>>.from(response);
+
+      print("Total students: ${students.length}");
+      print(students);
+
+      update(); // If using GetBuilder
+    } catch (e) {
+      print("Error fetching students: $e");
+    }
   }
 }

@@ -96,7 +96,12 @@ class AuthController extends GetxController {
   TextEditingController regaddcontrol = TextEditingController();
   TextEditingController regpasscontrol = TextEditingController();
   TextEditingController regreppasscontrol = TextEditingController();
+  String gender = '';
 
+  void toggleGender(String value) {
+    gender = value;
+    update();
+  }
   // ================= SIGNUP ERRORS =================
 
   String? nameError;
@@ -104,6 +109,7 @@ class AuthController extends GetxController {
   String? signupEmailError;
   String? signupPasswordError;
   String? confirmPasswordError;
+  String? gendererror;
 
   // ================= SIGNUP VALIDATION =================
 
@@ -113,6 +119,7 @@ class AuthController extends GetxController {
     String email,
     String password,
     String repPassword,
+    String gender,
   ) async {
     // Clear previous errors
     nameError = null;
@@ -120,6 +127,7 @@ class AuthController extends GetxController {
     signupEmailError = null;
     signupPasswordError = null;
     confirmPasswordError = null;
+    gendererror = null;
 
     bool isValid = true;
 
@@ -135,6 +143,11 @@ class AuthController extends GetxController {
     // Enrollment number validation
     if (enrollno.trim().isEmpty) {
       enrollNoError = "Enrollment number is required";
+      isValid = false;
+    }
+    // gender nvalidation
+    if (gender.trim().isEmpty) {
+      enrollNoError = "Gender is required";
       isValid = false;
     }
 
@@ -176,7 +189,15 @@ class AuthController extends GetxController {
       return;
     }
 
-    await signUpUser(name, enrollno, email, password, repPassword, isStudent);
+    await signUpUser(
+      name,
+      enrollno,
+      email,
+      password,
+      repPassword,
+      gender,
+      isStudent,
+    );
   }
 
   String get enrollmentNumber {
@@ -203,6 +224,7 @@ class AuthController extends GetxController {
     String email,
     String password,
     String repPassword,
+    String gender,
     bool isStudent,
   ) async {
     try {
@@ -230,6 +252,7 @@ class AuthController extends GetxController {
             'email': email.trim(),
             'enrollment_number': enrollno.trim(),
             'is_student': isStudent,
+            'gender': gender,
           });
       await getUserDetails();
 
