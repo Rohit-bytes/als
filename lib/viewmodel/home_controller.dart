@@ -27,7 +27,7 @@ class HomeController extends GetxController {
     } else if (hour < 21) {
       return 'Good Evening 🌇';
     } else {
-      return 'Good Night 🌙';
+      return 'Good Evening 🌙';
     }
   }
 
