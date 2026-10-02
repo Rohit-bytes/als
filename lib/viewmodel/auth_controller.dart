@@ -317,6 +317,7 @@ class AuthController extends GetxController {
       }
 
       print("Profile not found");
+      // Get.toNamed(AppRoutes.chooserole);
     } catch (e) {
       print("Error getting user details: $e");
     }

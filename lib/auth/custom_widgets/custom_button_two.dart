@@ -42,7 +42,7 @@ class CustomButtonTwo extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: textColor ?? ColorPalette.black,
                   fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ],

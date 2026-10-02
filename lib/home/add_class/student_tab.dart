@@ -21,22 +21,27 @@ class StudentTab extends StatelessWidget {
           builder: (homeController) {
             return homeController.students.isNotEmpty
                 ? Expanded(
-                    child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      itemCount: homeController.students.length,
-                      itemBuilder: (context, index) {
-                        final student = homeController.students[index];
-                        print(authController.userDetails!.gender);
-                        return StudentTile(
-                          enrollmentNo:
-                              student["enrollment_number"] ?? "No enrollment",
-                          name: student["name"] ?? "no name found",
-                          email: student["email"] ?? "no email found",
-                          imageUrl: student["gender"] == "Male"
-                              ? "assets/maleimage.png"
-                              : "assets/femaleuser.png",
-                        );
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        await homeController.fetchAllStudent();
                       },
+                      child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemCount: homeController.students.length,
+                        itemBuilder: (context, index) {
+                          final student = homeController.students[index];
+                          print(authController.userDetails!.gender);
+                          return StudentTile(
+                            enrollmentNo:
+                                student["enrollment_number"] ?? "No enrollment",
+                            name: student["name"] ?? "no name found",
+                            email: student["email"] ?? "no email found",
+                            imageUrl: student["gender"] == "Male"
+                                ? "assets/maleimage.png"
+                                : "assets/femaleuser.png",
+                          );
+                        },
+                      ),
                     ),
                   )
                 : Center(

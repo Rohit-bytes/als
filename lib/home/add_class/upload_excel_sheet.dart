@@ -1,7 +1,9 @@
+import 'package:als/auth/custom_widgets/custom_button_two.dart';
+import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/home/add_class/attendance_tab.dart';
 import 'package:als/home/add_class/student_tab.dart';
-import 'package:als/home/add_class/subject_tab.dart';
+import 'package:als/home/add_subject/custom_widgets/subject_tab.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_tabbar.dart';
 import 'package:als/viewmodel/home_controller.dart';
@@ -93,16 +95,20 @@ class UploadExcelSheet extends StatelessWidget {
                   },
                 ),
 
-                SizedBox(height: 15.h),
-
                 // ================= TAB CONTENT =================
                 _buildTab(homeController, newClass),
               ],
             ),
           ),
-          floatingActionButton: homeController.students.isNotEmpty
+          floatingActionButton:
+              homeController.students.isNotEmpty && homeController.tabIndex == 0
               ? FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(
+                      AppRoutes.enterStudentManually,
+                      arguments: newClass,
+                    );
+                  },
                   backgroundColor: ColorPalette.primary,
                   child: Icon(Icons.add, color: ColorPalette.white),
                   shape: RoundedRectangleBorder(
@@ -110,6 +116,31 @@ class UploadExcelSheet extends StatelessWidget {
                   ),
                 )
               : null,
+
+          bottomNavigationBar: homeController.tabIndex == 1
+              ? Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SafeArea(
+                    child: CustomButtonTwo(
+                      title: " Add Subject",
+                      prefixwidget: Icon(
+                        Icons.add,
+                        color: ColorPalette.primary,
+                      ),
+                      color: ColorPalette.white,
+                      textColor: ColorPalette.primary,
+
+                      radius: 12,
+                      callback: () {
+                        Get.toNamed(
+                          AppRoutes.enterSubjectManually,
+                          arguments: newClass,
+                        );
+                      },
+                    ),
+                  ),
+                )
+              : SizedBox(),
         );
       },
     );

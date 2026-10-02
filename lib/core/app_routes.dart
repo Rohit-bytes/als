@@ -10,4 +10,5 @@ class AppRoutes {
   static const String addclasssuccesful = '/addclasssuccesful';
   static const String uploadexcelsheet = '/uploadexcelsheet';
   static const String enterStudentManually = '/enterStudentManually';
+  static const String enterSubjectManually = '/enterSubjectManually';
 }

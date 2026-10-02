@@ -6,6 +6,7 @@ import 'package:als/home/add_class/add_classess.dart';
 import 'package:als/home/add_class/class_add_succesfully.dart';
 import 'package:als/home/add_class/enter_student_manually.dart';
 import 'package:als/home/add_class/upload_excel_sheet.dart';
+import 'package:als/home/add_subject/add_subject_manually.dart';
 import 'package:als/home/landing_page.dart';
 import 'package:als/home/view_all_classes.dart';
 import 'package:get/get.dart';
@@ -71,6 +72,12 @@ class AppPages {
     GetPage(
       name: AppRoutes.enterStudentManually,
       page: () => const EnterStudentManually(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.enterSubjectManually,
+      page: () => const EnterSubjectManually(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

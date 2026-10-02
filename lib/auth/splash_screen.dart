@@ -36,6 +36,8 @@ class _SplashScreenState extends State<SplashScreen>
       } else {
         final authController = Get.find<AuthController>();
         await authController.getUserDetails();
+        print("data " + supabase.auth.currentUser.toString());
+        print("data " + supabase.auth.currentSession.toString());
 
         Get.offAllNamed(AppRoutes.landingpage);
       }
