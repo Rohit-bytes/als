@@ -22,13 +22,20 @@ class SubjectTab extends StatelessWidget {
                     physics: BouncingScrollPhysics(),
                     itemCount: subjectController.subject.length,
                     itemBuilder: (context, index) {
-                      final subject = subjectController.subject[index];
+                      final subjectdata = subjectController.subject[index];
+
                       return CustomSubjectTile(
-                        subjectName: subject["subject_name"],
+                        subjectName: subjectdata["subject_name"],
                         index: index,
-                        credits: subject["credits"],
+                        credits: subjectdata["credits"],
                         icon: Icons.school_sharp,
                         onTap: () {},
+                        onMoreTap: () {
+                          final int subjectId = subjectdata['id'];
+
+                          subjectController.deleteSubject(subjectId, index);
+                          print("Subject ID : " + subjectId.toString());
+                        },
                       );
                     },
                   )

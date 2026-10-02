@@ -72,7 +72,8 @@ class _EnterSubjectManuallyState extends State<EnterSubjectManually> {
                   : CustomButtonTwo(
                       textColor: ColorPalette.white,
                       color: ColorPalette.primary,
-                      title: "Add Student",
+                      title: "Add Subject",
+
                       callback: () {
                         bool isValid = true;
 

@@ -85,4 +85,31 @@ class SubjectController extends GetxController {
       update();
     }
   }
+
+  int? loadingIndex;
+  Future<void> deleteSubject(int id, int index) async {
+    try {
+      loadingIndex = index;
+      update();
+
+      await supabase.from('subject').delete().eq('id', id);
+
+      CustomSnackbar.success(
+        title: "Subject deleted",
+        message: "Subject deleted successfully",
+      );
+
+      await fetchAllSubject();
+    } catch (e) {
+      print("Delete subject error: $e");
+
+      CustomSnackbar.error(
+        title: "Delete failed",
+        message: "Unable to delete subject",
+      );
+    } finally {
+      loadingIndex = null;
+      update();
+    }
+  }
 }
