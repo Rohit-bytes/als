@@ -117,6 +117,7 @@ class _EnterSubjectManuallyState extends State<EnterSubjectManually> {
                           subjectName: subjectName.text.trim(),
                           subjectCode: subjectCode.text.trim(),
                           credits: int.parse(credits.text.trim()),
+                          classId: newClass["id"],
                         );
                       },
                     ),
