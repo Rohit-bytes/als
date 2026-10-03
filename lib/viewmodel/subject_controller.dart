@@ -9,7 +9,7 @@ class SubjectController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchAllSubject();
+    // fetchAllSubject();
     listenTosubject();
   }
 
@@ -33,26 +33,26 @@ class SubjectController extends GetxController {
           callback: (payload) {
             print("subject table changed: ${payload.eventType}");
 
-            fetchAllSubject();
+            // fetchAllSubject();
           },
         )
         .subscribe();
   }
 
-  Future<void> fetchAllSubject() async {
-    try {
-      final response = await supabase.from('subject').select();
+  // Future<void> fetchAllSubject() async {
+  //   try {
+  //     final response = await supabase.from('subject').select();
 
-      subject = List<Map<String, dynamic>>.from(response);
+  //     subject = List<Map<String, dynamic>>.from(response);
 
-      print("Total subject: ${subject.length}");
-      print(subject);
+  //     print("Total subject: ${subject.length}");
+  //     print(subject);
 
-      update();
-    } catch (e) {
-      print("Error fetching subjects: $e");
-    }
-  }
+  //     update();
+  //   } catch (e) {
+  //     print("Error fetching subjects: $e");
+  //   }
+  // }
 
   Future<void> fetchClassSubject(String classId) async {
     try {
@@ -140,10 +140,15 @@ class SubjectController extends GetxController {
   }
 
   int? loadingIndex;
-  Future<void> deleteSubject(int id, int index) async {
+  Future<void> deleteSubject(int id, int index, String classId) async {
     try {
       loadingIndex = index;
       update();
+      await supabase
+          .from('class_subject')
+          .delete()
+          .eq('class_id', classId)
+          .eq('subject_id', id);
 
       await supabase.from('subject').delete().eq('id', id);
 
@@ -151,8 +156,8 @@ class SubjectController extends GetxController {
         title: "Subject deleted",
         message: "Subject deleted successfully",
       );
-
-      await fetchAllSubject();
+      await fetchClassSubject(classId);
+      // await fetchAllSubject();
     } catch (e) {
       print("Delete subject error: $e");
 

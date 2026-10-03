@@ -5,9 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class SubjectTab extends StatelessWidget {
+class SubjectTab extends StatefulWidget {
   final Map<String, dynamic> newclass;
   const new({super.key, required this.newclass});
+
+  @override
+  State<SubjectTab> createState() => _SubjectTabState();
+}
+
+class _SubjectTabState extends State<SubjectTab> {
+  late SubjectController subjectController;
+  @override
+  void initState() {
+    super.initState();
+
+    subjectController = Get.find<SubjectController>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      subjectController.fetchClassSubject(widget.newclass["id"].toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +35,9 @@ class SubjectTab extends StatelessWidget {
             return Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
-                  await subjectController.fetchClassSubject(newclass["id"]);
+                  await subjectController.fetchClassSubject(
+                    widget.newclass["id"],
+                  );
                 },
                 child: subjectController.subject.isNotEmpty
                     ? ListView.builder(
@@ -35,15 +54,19 @@ class SubjectTab extends StatelessWidget {
                             onTap: () {
                               print(
                                 "class name and id " +
-                                    newclass["id"] +
+                                    widget.newclass["id"] +
                                     " " +
-                                    newclass["class_name"],
+                                    widget.newclass["class_name"],
                               );
                             },
                             onMoreTap: () {
                               final int subjectId = subjectdata['id'];
 
-                              subjectController.deleteSubject(subjectId, index);
+                              subjectController.deleteSubject(
+                                subjectId,
+                                index,
+                                widget.newclass["id"],
+                              );
                               print("Subject ID : " + subjectId.toString());
                             },
                           );
