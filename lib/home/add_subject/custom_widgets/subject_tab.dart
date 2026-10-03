@@ -33,52 +33,61 @@ class _SubjectTabState extends State<SubjectTab> {
         return GetBuilder<SubjectController>(
           builder: (subjectController) {
             return Expanded(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  await subjectController.fetchClassSubject(
-                    widget.newclass["id"],
-                  );
-                },
-                child: subjectController.subject.isNotEmpty
-                    ? ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemCount: subjectController.subject.length,
-                        itemBuilder: (context, index) {
-                          final subjectdata = subjectController.subject[index];
+              child: subjectController.isloading == true
+                  ? Container(
+                      height: 30.h,
+                      width: 30.w,
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  : RefreshIndicator(
+                      onRefresh: () async {
+                        await subjectController.fetchClassSubject(
+                          widget.newclass["id"],
+                        );
+                      },
+                      child: subjectController.subject.isNotEmpty
+                          ? ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              itemCount: subjectController.subject.length,
+                              itemBuilder: (context, index) {
+                                final subjectdata =
+                                    subjectController.subject[index];
 
-                          return CustomSubjectTile(
-                            subjectName: subjectdata["subject_name"],
-                            index: index,
-                            credits: subjectdata["credits"],
-                            icon: Icons.school_sharp,
-                            onTap: () {
-                              print(
-                                "class name and id " +
-                                    widget.newclass["id"] +
-                                    " " +
-                                    widget.newclass["class_name"],
-                              );
-                            },
-                            onMoreTap: () {
-                              final int subjectId = subjectdata['id'];
+                                return CustomSubjectTile(
+                                  subjectName: subjectdata["subject_name"],
+                                  index: index,
+                                  credits: subjectdata["credits"],
+                                  icon: Icons.school_sharp,
+                                  onTap: () {
+                                    print(
+                                      "class name and id " +
+                                          widget.newclass["id"] +
+                                          " " +
+                                          widget.newclass["class_name"],
+                                    );
+                                  },
+                                  onMoreTap: () {
+                                    final int subjectId = subjectdata['id'];
 
-                              subjectController.deleteSubject(
-                                subjectId,
-                                index,
-                                widget.newclass["id"],
-                              );
-                              print("Subject ID : " + subjectId.toString());
-                            },
-                          );
-                        },
-                      )
-                    : Center(
-                        child: Image.asset(
-                          "assets/nosubjectfound.png",
-                          height: 250.h,
-                        ),
-                      ),
-              ),
+                                    subjectController.deleteSubject(
+                                      subjectId,
+                                      index,
+                                      widget.newclass["id"],
+                                    );
+                                    print(
+                                      "Subject ID : " + subjectId.toString(),
+                                    );
+                                  },
+                                );
+                              },
+                            )
+                          : Center(
+                              child: Image.asset(
+                                "assets/nosubjectfound.png",
+                                height: 250.h,
+                              ),
+                            ),
+                    ),
             );
           },
         );

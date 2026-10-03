@@ -56,6 +56,8 @@ class SubjectController extends GetxController {
 
   Future<void> fetchClassSubject(String classId) async {
     try {
+      isloading = true;
+      update();
       // 1. Get subject IDs assigned to this class
       final classSubjectResponse = await supabase
           .from('class_subject')
@@ -92,6 +94,9 @@ class SubjectController extends GetxController {
       update();
     } catch (e) {
       print("Error fetching class subjects: $e");
+    } finally {
+      isloading = false;
+      update();
     }
   }
 
