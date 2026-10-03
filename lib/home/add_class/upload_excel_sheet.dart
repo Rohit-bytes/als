@@ -25,7 +25,13 @@ class UploadExcelSheet extends StatelessWidget {
     return GetBuilder<HomeController>(
       builder: (homeController) {
         return Scaffold(
-          appBar: CustomAppBar(title: ""),
+          appBar: CustomAppBar(
+            title: "",
+            onBack: () {
+              homeController.tabchange(0);
+              Get.back();
+            },
+          ),
           backgroundColor: ColorPalette.background,
 
           body: Padding(
@@ -157,7 +163,7 @@ class UploadExcelSheet extends StatelessWidget {
 
       // SUBJECTS
       case 1:
-        return SubjectTab();
+        return SubjectTab(newclass: newClass);
 
       // ATTENDANCE
       case 2:

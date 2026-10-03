@@ -9,7 +9,7 @@ class SubjectController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchAllSubject();
+    // fetchAllSubject();
     listenTosubject();
   }
 
@@ -33,24 +33,70 @@ class SubjectController extends GetxController {
           callback: (payload) {
             print("subject table changed: ${payload.eventType}");
 
-            fetchAllSubject();
+            // fetchAllSubject();
           },
         )
         .subscribe();
   }
 
-  Future<void> fetchAllSubject() async {
+  // Future<void> fetchAllSubject() async {
+  //   try {
+  //     final response = await supabase.from('subject').select();
+
+  //     subject = List<Map<String, dynamic>>.from(response);
+
+  //     print("Total subject: ${subject.length}");
+  //     print(subject);
+
+  //     update();
+  //   } catch (e) {
+  //     print("Error fetching subjects: $e");
+  //   }
+  // }
+
+  Future<void> fetchClassSubject(String classId) async {
     try {
-      final response = await supabase.from('subject').select();
+      isloading = true;
+      update();
+      // 1. Get subject IDs assigned to this class
+      final classSubjectResponse = await supabase
+          .from('class_subject')
+          .select('subject_id')
+          .eq('class_id', classId);
+
+      final List<Map<String, dynamic>> classSubjects =
+          List<Map<String, dynamic>>.from(classSubjectResponse);
+
+      if (classSubjects.isEmpty) {
+        subject = [];
+        update();
+        return;
+      }
+
+      // 2. Extract subject IDs
+      final List<int> subjectIds = classSubjects
+          .map((item) => item['subject_id'] as int)
+          .toList();
+
+      print("Subject IDs: $subjectIds");
+
+      // 3. Fetch actual subjects
+      final response = await supabase
+          .from('subject')
+          .select()
+          .inFilter('id', subjectIds);
 
       subject = List<Map<String, dynamic>>.from(response);
 
-      print("Total subject: ${subject.length}");
+      print("Total subjects for class: ${subject.length}");
       print(subject);
 
       update();
     } catch (e) {
-      print("Error fetching subjects: $e");
+      print("Error fetching class subjects: $e");
+    } finally {
+      isloading = false;
+      update();
     }
   }
 
@@ -60,11 +106,12 @@ class SubjectController extends GetxController {
     required String subjectName,
     required String subjectCode,
     required int credits,
+    required String classId,
   }) async {
     try {
       isloading = true;
       update();
-      await supabase
+      final newSubject = await supabase
           .from('subject')
           .insert({
             'subject_name': subjectName,
@@ -73,6 +120,17 @@ class SubjectController extends GetxController {
           })
           .select()
           .single();
+      final int subjectId = newSubject['id'];
+
+      print("New Subject ID: $subjectId");
+      print("Class ID: $classId");
+
+      // 2. Connect subject with class
+      await supabase.from('class_subject').insert({
+        'class_id': classId,
+        'subject_id': subjectId,
+      });
+
       Get.back();
     } catch (e) {
       print(e);
@@ -87,10 +145,15 @@ class SubjectController extends GetxController {
   }
 
   int? loadingIndex;
-  Future<void> deleteSubject(int id, int index) async {
+  Future<void> deleteSubject(int id, int index, String classId) async {
     try {
       loadingIndex = index;
       update();
+      await supabase
+          .from('class_subject')
+          .delete()
+          .eq('class_id', classId)
+          .eq('subject_id', id);
 
       await supabase.from('subject').delete().eq('id', id);
 
@@ -98,8 +161,8 @@ class SubjectController extends GetxController {
         title: "Subject deleted",
         message: "Subject deleted successfully",
       );
-
-      await fetchAllSubject();
+      await fetchClassSubject(classId);
+      // await fetchAllSubject();
     } catch (e) {
       print("Delete subject error: $e");
 
