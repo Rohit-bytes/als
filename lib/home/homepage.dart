@@ -5,6 +5,7 @@ import 'package:als/core/color_pallete.dart';
 import 'package:als/home/custom_homepage_widgets.dart/classes_homepage.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_color_button.dart';
+import 'package:als/home/custom_homepage_widgets.dart/custom_dialog.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_title_anchor.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_trackers.dart';
 import 'package:als/viewmodel/auth_controller.dart';
@@ -106,6 +107,28 @@ class Homepage extends StatelessWidget {
                                     : homeController.classes.length,
                                 itemBuilder: (context, index) {
                                   return ClassesHomepage(
+                                    onlongpress: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return CustomDialog(
+                                            message: "Are you sure you want to delete this class?",
+                                            firstButtonText: "Cancel",
+                                            secondButtonText: "Yes",
+                                            onFirstPressed: () {
+                                              Get.back();
+                                            },
+                                            onSecondPressed: () {
+                                              homeController.deleteClass(
+                                                homeController
+                                                    .classes[index]["id"],
+                                              );
+                                              Get.back();
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
                                     icons: homeController.getCourseIcon(
                                       homeController.classes[index]["course"],
                                     ),
@@ -116,6 +139,7 @@ class Homepage extends StatelessWidget {
                                     title:
                                         "${homeController.classes[index]["class_name"]}",
                                     subtitle: "120",
+
                                     onpress: () {
                                       print(
                                         "${homeController.classes[index]["class_name"]}",

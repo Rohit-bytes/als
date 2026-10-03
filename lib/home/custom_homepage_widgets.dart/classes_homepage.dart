@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class ClassesHomepage extends StatelessWidget {
   final String? title;
   final VoidCallback onpress;
+  final VoidCallback onlongpress;
   final String? subtitle;
   final Color? color;
   final IconData? icons;
@@ -13,6 +14,7 @@ class ClassesHomepage extends StatelessWidget {
     super.key,
     this.title,
     required this.onpress,
+    required this.onlongpress,
     this.subtitle,
     this.icons,
     this.color,
@@ -21,6 +23,7 @@ class ClassesHomepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onLongPress: onlongpress,
       onTap: () {
         onpress();
       },

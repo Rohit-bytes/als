@@ -270,4 +270,21 @@ class HomeController extends GetxController {
       print("Error fetching students: $e");
     }
   }
+
+  Future<void> deleteClass(String classId) async {
+    try {
+      await supabase.from('class_subject').delete().eq('class_id', classId);
+      await supabase.from('new_class').delete().eq('id', classId);
+      await getClasses();
+
+      CustomSnackbar.success(
+        title: "Class deleted",
+        message: "Class deleted successfully",
+      );
+
+      update(); // If using GetBuilder
+    } catch (e) {
+      print("Error deleting class: $e");
+    }
+  }
 }

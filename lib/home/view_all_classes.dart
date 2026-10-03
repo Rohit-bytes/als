@@ -1,6 +1,7 @@
 import 'package:als/core/color_pallete.dart';
 import 'package:als/home/custom_homepage_widgets.dart/classes_homepage.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
+import 'package:als/home/custom_homepage_widgets.dart/custom_dialog.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,6 +44,22 @@ class ViewAllClasses extends StatelessWidget {
 
                           itemBuilder: (context, index) {
                             return ClassesHomepage(
+                              onlongpress: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomDialog(
+                                      message: "Are you sure you want to delete this class?",
+                                      firstButtonText: "Cancel",
+                                      secondButtonText: "Yes",
+                                      onFirstPressed: () {
+                                        Get.back();
+                                      },
+                                      onSecondPressed: () {},
+                                    );
+                                  },
+                                );
+                              },
                               icons: homeController.getCourseIcon(
                                 homeController.classes[index]["course"],
                               ),
