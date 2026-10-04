@@ -50,7 +50,7 @@ class CustomRadio<T> extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 10,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
               color: isSelected ? ColorPalette.primary : Colors.grey.shade700,
             ),
