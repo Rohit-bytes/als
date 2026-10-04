@@ -5,6 +5,7 @@ import 'package:als/core/app_routes.dart';
 import 'package:als/core/app_text.dart';
 import 'package:als/core/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,7 +14,7 @@ final supabase = Supabase.instance.client;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Supabase.initialize(
     url: AppText.supabaseUrl,
     publishableKey: AppText.supabasePublishableUrl,

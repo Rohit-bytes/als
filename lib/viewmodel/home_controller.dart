@@ -262,8 +262,8 @@ class HomeController extends GetxController {
 
       students = List<Map<String, dynamic>>.from(response);
 
-      print("Total students: ${students.length}");
-      print(students);
+      // print("Total students: ${students.length}");
+      // print(students);
 
       update(); // If using GetBuilder
     } catch (e) {

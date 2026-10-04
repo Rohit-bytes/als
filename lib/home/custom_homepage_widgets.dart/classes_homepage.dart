@@ -49,10 +49,10 @@ class ClassesHomepage extends StatelessWidget {
                           ColorPalette.primaryLight,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    width: 80,
-                    height: 80,
+                    width: 60,
+                    height: 60,
                     child: Icon(
-                      size: 50,
+                      size: 40,
                       icons ?? Icons.group,
 
                       color: color ?? ColorPalette.background,
