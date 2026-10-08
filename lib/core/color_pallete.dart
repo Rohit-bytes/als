@@ -19,6 +19,7 @@ class ColorPalette {
   // =========================
 
   static const Color background = Color(0xFFDBEAFE);
+  static const Color backgroundtop = Color.fromARGB(193, 201, 223, 253);
   static const Color surface = Color(0xFFF1F5F9);
 
   // =========================
