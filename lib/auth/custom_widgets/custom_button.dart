@@ -34,7 +34,7 @@ class CustomButton extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 0),
+              padding: const EdgeInsets.only(left: 8.0, right: 8),
               child: Container(
                 height: 40.h,
                 child: CustomCircleButton(onPressed: () {}),
