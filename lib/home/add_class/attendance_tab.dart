@@ -1,3 +1,4 @@
+import 'package:als/home/add_class/attendance_widgets.dart/today_attendance.dart';
 import 'package:flutter/material.dart';
 
 class AttendanceTab extends StatelessWidget {
@@ -5,6 +6,6 @@ class AttendanceTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(children: [TodayAttendance()]);
   }
 }

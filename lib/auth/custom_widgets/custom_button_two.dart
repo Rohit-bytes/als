@@ -9,7 +9,9 @@ class CustomButtonTwo extends StatelessWidget {
   final Color? textColor;
   final double? radius;
   final Widget? prefixwidget;
-  const new({
+  final bool isLoading;
+
+  const CustomButtonTwo({
     super.key,
     required this.title,
     required this.callback,
@@ -17,14 +19,13 @@ class CustomButtonTwo extends StatelessWidget {
     this.color,
     this.radius,
     this.textColor,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        callback();
-      },
+      onTap: isLoading ? null : callback,
       child: Container(
         height: 50.h,
         width: double.infinity,
@@ -33,20 +34,31 @@ class CustomButtonTwo extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius ?? 50),
         ),
         child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              prefixwidget ?? SizedBox(),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: textColor ?? ColorPalette.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w800,
+          child: isLoading
+              ? SizedBox(
+                  height: 22.h,
+                  width: 22.w,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.5,
+                    color: textColor ?? ColorPalette.black,
+                  ),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (prefixwidget != null) prefixwidget!,
+                    SizedBox(width: 5.w),
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
+                            color: textColor ?? ColorPalette.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                          ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
       ),
     );

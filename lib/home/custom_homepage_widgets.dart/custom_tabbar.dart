@@ -6,12 +6,14 @@ class ClassTabBar extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onTabChanged;
   final List<String> tabs;
+  final List<IconData> iconData;
 
   const ClassTabBar({
     super.key,
     required this.selectedIndex,
     required this.onTabChanged,
     this.tabs = const ['Students', 'Subjects', 'Attendance'],
+    this.iconData = const [Icons.person, Icons.book, Icons.qr_code],
   });
 
   @override
@@ -29,6 +31,7 @@ class ClassTabBar extends StatelessWidget {
         children: List.generate(tabs.length, (index) {
           return Expanded(
             child: _ClassTab(
+              icon: iconData[index], // ✅ FIX
               title: tabs[index],
               isSelected: selectedIndex == index,
               onTap: () => onTabChanged(index),
@@ -44,11 +47,13 @@ class _ClassTab extends StatelessWidget {
   final String title;
   final bool isSelected;
   final VoidCallback onTap;
+  final IconData icon;
 
   const _ClassTab({
     required this.title,
     required this.isSelected,
     required this.onTap,
+    required this.icon,
   });
 
   @override
@@ -59,7 +64,8 @@ class _ClassTab extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOut,
-        margin: EdgeInsets.only(left: 5.w, right: 5.w, top: 5.h),
+        margin: EdgeInsets.only(left: 5.w, right: 5.w, top: 15.h),
+
         decoration: BoxDecoration(
           color: isSelected ? Colors.white : Colors.transparent,
           borderRadius: BorderRadius.vertical(top: Radius.circular(13.r)),
@@ -77,11 +83,24 @@ class _ClassTab extends StatelessWidget {
                       ? const Color(0xFF2379ED)
                       : const Color(0xFF667085),
                 ),
-                child: Text(title),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      icon,
+                      size: 18,
+                      color: isSelected
+                          ? const Color(0xFF2379ED)
+                          : const Color(0xFF667085),
+                    ),
+                    SizedBox(width: 5.w),
+                    Text(title),
+                  ],
+                ),
               ),
             ),
 
-            // Blue selected indicator
+            // Selected indicator
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               curve: Curves.easeOut,

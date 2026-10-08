@@ -67,60 +67,58 @@ class _EnterSubjectManuallyState extends State<EnterSubjectManually> {
           bottomNavigationBar: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: subjectController.isloading
-                  ? Center(child: CircularProgressIndicator())
-                  : CustomButtonTwo(
-                      textColor: ColorPalette.white,
-                      color: ColorPalette.primary,
-                      title: "Add Subject",
+              child: CustomButtonTwo(
+                isLoading: subjectController.isloading,
 
-                      callback: () {
-                        bool isValid = true;
+                textColor: ColorPalette.white,
+                color: ColorPalette.primary,
+                title: "Add Subject",
 
-                        // Subject name validation
-                        if (subjectName.text.trim().isEmpty) {
-                          setState(() {
-                            errorsubName = "Subject name is required";
-                          });
-                          isValid = false;
-                        }
+                callback: () {
+                  bool isValid = true;
 
-                        // Subject code validation
-                        if (subjectCode.text.trim().isEmpty) {
-                          setState(() {
-                            errorSubjectCode = "Subject code is required";
-                          });
-                          isValid = false;
-                        }
+                  // Subject name validation
+                  if (subjectName.text.trim().isEmpty) {
+                    setState(() {
+                      errorsubName = "Subject name is required";
+                    });
+                    isValid = false;
+                  }
 
-                        // Credits validation
-                        final int? creditValue = int.tryParse(
-                          credits.text.trim(),
-                        );
+                  // Subject code validation
+                  if (subjectCode.text.trim().isEmpty) {
+                    setState(() {
+                      errorSubjectCode = "Subject code is required";
+                    });
+                    isValid = false;
+                  }
 
-                        if (credits.text.trim().isEmpty) {
-                          setState(() {
-                            errorCredits = "Credits are required";
-                          });
-                          isValid = false;
-                        } else if (creditValue == null) {
-                          setState(() {
-                            errorCredits = "Enter a valid number";
-                          });
-                          isValid = false;
-                        }
+                  // Credits validation
+                  final int? creditValue = int.tryParse(credits.text.trim());
 
-                        if (!isValid) {
-                          return;
-                        }
-                        subjectController.addNewSubject(
-                          subjectName: subjectName.text.trim(),
-                          subjectCode: subjectCode.text.trim(),
-                          credits: int.parse(credits.text.trim()),
-                          classId: newClass["id"],
-                        );
-                      },
-                    ),
+                  if (credits.text.trim().isEmpty) {
+                    setState(() {
+                      errorCredits = "Credits are required";
+                    });
+                    isValid = false;
+                  } else if (creditValue == null) {
+                    setState(() {
+                      errorCredits = "Enter a valid number";
+                    });
+                    isValid = false;
+                  }
+
+                  if (!isValid) {
+                    return;
+                  }
+                  subjectController.addNewSubject(
+                    subjectName: subjectName.text.trim(),
+                    subjectCode: subjectCode.text.trim(),
+                    credits: int.parse(credits.text.trim()),
+                    classId: newClass["id"],
+                  );
+                },
+              ),
             ),
           ),
         );
