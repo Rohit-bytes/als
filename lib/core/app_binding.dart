@@ -9,11 +9,8 @@ class AppBindings extends Bindings {
   @override
   void dependencies() {
     Get.put<SplashController>(SplashController(), permanent: true);
-
     Get.put<AuthController>(AuthController(), permanent: true);
-
-    Get.lazyPut<HomeController>(() => HomeController());
-
-    Get.lazyPut<SubjectController>(() => SubjectController());
+    Get.put<HomeController>(HomeController(), permanent: true);
+    Get.put<SubjectController>(SubjectController(), permanent: true);
   }
 }

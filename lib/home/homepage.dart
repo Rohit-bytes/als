@@ -8,6 +8,7 @@ import 'package:als/home/custom_homepage_widgets.dart/custom_color_button.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_dialog.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_title_anchor.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_trackers.dart';
+import 'package:als/home/custom_homepage_widgets.dart/upcoming_class.dart';
 import 'package:als/viewmodel/auth_controller.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -179,6 +180,8 @@ class Homepage extends StatelessWidget {
                           ],
                         ),
                       ),
+                      SizedBox(height: 10.h),
+                      UpcomingClassesWidget(),
                     ],
                   ),
                 ),

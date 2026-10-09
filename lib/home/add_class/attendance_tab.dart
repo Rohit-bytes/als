@@ -1,12 +1,15 @@
 import 'package:als/auth/custom_widgets/custom_button_two.dart';
+import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/home/add_class/attendance_widgets.dart/today_attendance.dart';
 import 'package:als/home/custom_homepage_widgets.dart/custom_color_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class AttendanceTab extends StatelessWidget {
-  const new({super.key});
+  final Map<String, dynamic> newClass;
+  const new({super.key, required this.newClass});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,9 @@ class AttendanceTab extends StatelessWidget {
             radius: 10,
             prefixwidget: Icon(Icons.qr_code, color: ColorPalette.white),
             title: "Start Attendance",
-            callback: () {},
+            callback: () {
+              Get.toNamed(AppRoutes.StartAttendanceScreen, arguments: newClass);
+            },
           ),
         ],
       ),

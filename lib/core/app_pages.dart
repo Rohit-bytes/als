@@ -3,6 +3,7 @@ import 'package:als/auth/teacher_login.dart';
 import 'package:als/auth/splash_screen.dart';
 import 'package:als/auth/teacher_register.dart';
 import 'package:als/home/add_class/add_classess.dart';
+import 'package:als/home/add_class/attendance_widgets.dart/start_attendance_screen.dart';
 import 'package:als/home/add_class/class_add_succesfully.dart';
 import 'package:als/home/add_class/enter_student_manually.dart';
 import 'package:als/home/add_class/upload_excel_sheet.dart';
@@ -78,6 +79,12 @@ class AppPages {
     GetPage(
       name: AppRoutes.enterSubjectManually,
       page: () => const EnterSubjectManually(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.StartAttendanceScreen,
+      page: () => const StartAttendanceScreen(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

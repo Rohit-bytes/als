@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 
 class CustomDropdown extends StatelessWidget {
   final List<DropdownMenuEntry<String>> items;
@@ -45,7 +46,7 @@ class CustomDropdown extends StatelessWidget {
           // Error text
           errorText: errorText,
 
-          hintText: hintText,
+          hintText: hintText.capitalizeFirst,
 
           leadingIcon: leadingIcon == null
               ? null
@@ -70,7 +71,7 @@ class CustomDropdown extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
             ),
           ),
-
+          showTrailingIcon: true,
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: Colors.white,

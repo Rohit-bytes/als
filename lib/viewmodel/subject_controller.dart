@@ -11,6 +11,7 @@ class SubjectController extends GetxController {
     super.onInit();
     // fetchAllSubject();
     listenTosubject();
+    fetchAllduration();
   }
 
   @override
@@ -53,6 +54,23 @@ class SubjectController extends GetxController {
   //     print("Error fetching subjects: $e");
   //   }
   // }
+
+  // fetch duration
+  List<Map<String, dynamic>> duration = [];
+  Future<void> fetchAllduration() async {
+    try {
+      final response = await supabase.from('duration').select();
+
+      duration = List<Map<String, dynamic>>.from(response);
+
+      print("Total durations: ${duration.length}");
+      print(duration);
+
+      update();
+    } catch (e) {
+      print("Error fetching duration: $e");
+    }
+  }
 
   Future<void> fetchClassSubject(String classId) async {
     try {

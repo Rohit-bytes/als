@@ -167,7 +167,7 @@ class UploadExcelSheet extends StatelessWidget {
 
       // ATTENDANCE
       case 2:
-        return AttendanceTab();
+        return AttendanceTab(newClass: newClass);
 
       default:
         return StudentTab(newclass: newClass);
