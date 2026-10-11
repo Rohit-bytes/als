@@ -10,6 +10,7 @@ class ColorPalette {
   static const Color primary = Color(0xFF3B82F6);
   static const Color primaryLight = Color(0xFF60A5FA);
   static const Color Green = Color.fromARGB(255, 96, 250, 155);
+  static const Color Green2 = Color.fromARGB(255, 8, 161, 67);
   static const Color creme = Color.fromARGB(255, 255, 191, 72);
   static const Color orange = Color.fromARGB(255, 255, 174, 0);
   static const Color primaryDark = Color(0xFF1E3A8A);

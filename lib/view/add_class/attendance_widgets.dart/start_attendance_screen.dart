@@ -24,6 +24,7 @@ class _StartAttendanceScreenState extends State<StartAttendanceScreen> {
   final Map<String, dynamic> newclass = Get.arguments;
   late SubjectController subjectController;
   String selectedsubject = "";
+  String selectedsubjectid = "";
   String selectedduration = "";
   String selecteddate = "";
   @override
@@ -51,7 +52,16 @@ class _StartAttendanceScreenState extends State<StartAttendanceScreen> {
               children: [
                 CustomDropdown(
                   onSelected: (value) {
-                    // selectedsubject = value;
+                    setState(() {
+                      selectedsubjectid = value ?? "";
+
+                      // Find the selected subject using its ID
+                      final subject = subjectController.subject.firstWhere(
+                        (item) => item['id'].toString() == selectedsubjectid,
+                      );
+
+                      selectedsubject = subject['subject_name'] ?? "";
+                    });
                   },
                   items: subjectController.subject.map((subject) {
                     return DropdownMenuEntry<String>(
@@ -89,6 +99,15 @@ class _StartAttendanceScreenState extends State<StartAttendanceScreen> {
                 ),
                 SizedBox(height: 10.h),
                 CustomDropdown(
+                  onSelected: (value) {
+                    setState(() {
+                      final duration = subjectController.duration.firstWhere(
+                        (item) => item['id'].toString() == value,
+                      );
+
+                      selectedduration = duration['time'] ?? "";
+                    });
+                  },
                   items: subjectController.duration.map((duration) {
                     return DropdownMenuEntry<String>(
                       value: duration['id'].toString() ?? '',
@@ -108,16 +127,30 @@ class _StartAttendanceScreenState extends State<StartAttendanceScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomButtonTwo(
-                color: ColorPalette.Green,
+                isLoading: subjectController.attendanceisloading,
+                color: ColorPalette.Green2,
                 textColor: ColorPalette.white,
                 radius: 10,
                 prefixwidget: Icon(Icons.qr_code, color: ColorPalette.white),
                 title: "Generate QR Code",
-                callback: () {
-                  Get.offAllNamed(
-                    AppRoutes.GenerateQrScreen,
-                    arguments: {newclass},
+                callback: () async {
+                  print(
+                    "${selectedsubject}${selectedsubjectid} ${selectedduration} ${newclass["id"]}",
                   );
+                  final attendance = await subjectController.StartAttendance(
+                    subjectName: selectedsubject,
+                    subjectid: selectedsubjectid,
+                    date: DateTime.now().toString(),
+                    duration: selectedduration,
+                    classid: newclass["id"],
+                  );
+
+                  if (attendance != null) {
+                    Get.offNamed(
+                      AppRoutes.GenerateQrScreen,
+                      arguments: attendance['id'].toString(),
+                    );
+                  }
                 },
               ),
             ),

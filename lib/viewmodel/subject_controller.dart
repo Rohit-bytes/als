@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:als/auth/custom_widgets/custom_snackbar.dart';
 import 'package:als/core/app_routes.dart';
 import 'package:als/main.dart';
@@ -39,21 +41,6 @@ class SubjectController extends GetxController {
         )
         .subscribe();
   }
-
-  // Future<void> fetchAllSubject() async {
-  //   try {
-  //     final response = await supabase.from('subject').select();
-
-  //     subject = List<Map<String, dynamic>>.from(response);
-
-  //     print("Total subject: ${subject.length}");
-  //     print(subject);
-
-  //     update();
-  //   } catch (e) {
-  //     print("Error fetching subjects: $e");
-  //   }
-  // }
 
   // fetch duration
   List<Map<String, dynamic>> duration = [];
@@ -190,6 +177,91 @@ class SubjectController extends GetxController {
       );
     } finally {
       loadingIndex = null;
+      update();
+    }
+  }
+
+  //start attendance
+  List<Map<String, dynamic>> startAttendance = [];
+
+  late final RealtimeChannel startattendancechannel;
+
+  void listenTostartattendance() {
+    startattendancechannel = supabase
+        .channel('start_attendance')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: 'start_attendance',
+          callback: (payload) {
+            print("start_attendance table changed: ${payload.eventType}");
+
+            // fetchattendancedata();
+          },
+        )
+        .subscribe();
+  }
+
+  bool attendanceisloading = false;
+  Future<Map<String, dynamic>?> StartAttendance({
+    required String subjectName,
+    required String subjectid,
+    required String date,
+    required String duration,
+    required String classid,
+  }) async {
+    try {
+      attendanceisloading = true;
+      update();
+
+      final response = await supabase
+          .from('start_attendance')
+          .insert({
+            'subject_name': subjectName,
+            'subject_id': subjectid,
+            'date': date,
+            'duration': duration,
+            'classid': classid,
+          })
+          .select()
+          .single();
+
+      return response;
+    } catch (e) {
+      print('Error starting attendance: $e');
+
+      CustomSnackbar.error(
+        title: "Attendance not started",
+        message: "Error while creating attendance",
+      );
+
+      return null;
+    } finally {
+      attendanceisloading = false;
+      update();
+    }
+  }
+
+  Future<void> fetchattendancedata(String attendaceid) async {
+    try {
+      attendanceisloading = true;
+      update();
+      final response = await supabase
+          .from('start_attendance')
+          .select()
+          .eq('classid', attendaceid);
+      ;
+
+      startAttendance = List<Map<String, dynamic>>.from(response);
+
+      print("Total durations: ${duration.length}");
+      print(duration);
+
+      update();
+    } catch (e) {
+      print("Error fetching duration: $e");
+    } finally {
+      attendanceisloading = false;
       update();
     }
   }
