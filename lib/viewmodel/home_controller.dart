@@ -93,7 +93,10 @@ class HomeController extends GetxController {
 
   Future<void> getClasses() async {
     try {
-      final response = await supabase.from('new_class').select();
+      final response = await supabase
+          .from('new_class')
+          .select()
+          .order('created_at', ascending: false);
 
       classes = List<Map<String, dynamic>>.from(response);
       print("class ${classes}");

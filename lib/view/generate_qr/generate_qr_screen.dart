@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:als/auth/custom_widgets/custom_button_two.dart';
+import 'package:als/auth/custom_widgets/custom_text.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/view/custom_homepage_widgets.dart/custom_appbar.dart';
 import 'package:als/view/custom_homepage_widgets.dart/custom_color_button.dart';
@@ -6,6 +9,7 @@ import 'package:als/viewmodel/subject_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class GenerateQrScreen extends StatefulWidget {
@@ -16,15 +20,15 @@ class GenerateQrScreen extends StatefulWidget {
 }
 
 class _GenerateQrScreenState extends State<GenerateQrScreen> {
-  late String attendanceid;
-  late SubjectController subjectController;
+  // late String attendanceid;
+  // late SubjectController subjectController;
 
   @override
   void initState() {
     super.initState();
 
-    subjectController = Get.find<SubjectController>();
-    attendanceid = Get.arguments.toString();
+    final subjectController = Get.find<SubjectController>();
+    final attendanceid = Get.arguments.toString();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       subjectController.fetchattendancedata(attendanceid);
@@ -35,12 +39,17 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<SubjectController>(
       builder: (subController) {
+        final dateString = subController.startAttendance['date']?.toString();
+
         return Scaffold(
           backgroundColor: ColorPalette.background,
 
           appBar: CustomAppBar(
-            // newclass["class_name"]
-            title: "",
+            onBack: () {
+              Get.back();
+            },
+            fontsize: 16,
+            title: "Start Attendance",
             actions: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -81,6 +90,11 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
               : Center(
                   child: Column(
                     children: [
+                      CustomText(subController.startAttendance["subject_name"]),
+                      Text(
+                        "${DateFormat('dd MMM yyyy, hh:mm a').format(DateTime.parse(subController.startAttendance["date"])).toUpperCase()}",
+                      ),
+                      SizedBox(height: 10.h),
                       Container(
                         decoration: BoxDecoration(
                           color: ColorPalette.white,
@@ -91,7 +105,15 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: QrImageView(
-                                data: '1234567890',
+                                data: jsonEncode({
+                                  'id': subController.startAttendance['id'],
+                                  'subject_id': subController
+                                      .startAttendance['subject_id'],
+                                  'subject_name': subController
+                                      .startAttendance["subject_name"],
+                                  'class_id':
+                                      subController.startAttendance['classid'],
+                                }),
                                 version: QrVersions.auto,
                                 size: 200.0,
                               ),

@@ -9,11 +9,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final bool showBackButton;
   final Widget? leadingwidget;
+  final double? fontsize;
 
   const CustomAppBar({
     super.key,
     required this.title,
     this.onBack,
+    this.fontsize,
     this.actions,
     this.showBackButton = true,
     this.leadingwidget,
@@ -42,7 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title,
         style: TextStyle(
-          fontSize: 20.sp,
+          fontSize: fontsize ?? 20.sp,
           fontWeight: FontWeight.w600,
           color: Colors.black,
         ),

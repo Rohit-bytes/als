@@ -1,3 +1,4 @@
+import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/view/custom_homepage_widgets.dart/classes_homepage.dart';
 import 'package:als/view/custom_homepage_widgets.dart/custom_appbar.dart';
@@ -55,7 +56,12 @@ class ViewAllClasses extends StatelessWidget {
                                       onFirstPressed: () {
                                         Get.back();
                                       },
-                                      onSecondPressed: () {},
+                                      onSecondPressed: () {
+                                        homeController.deleteClass(
+                                          homeController.classes[index]["id"],
+                                        );
+                                        Get.back();
+                                      },
                                     );
                                   },
                                 );
@@ -71,6 +77,23 @@ class ViewAllClasses extends StatelessWidget {
                                   "${homeController.classes[index]["class_name"]}",
                               subtitle: "120",
                               onpress: () {
+                                print(
+                                  "${homeController.classes[index]["class_name"]}",
+                                );
+                                print(
+                                  "${homeController.classes[index]["semester"]}",
+                                );
+                                Get.toNamed(
+                                  AppRoutes.uploadexcelsheet,
+                                  arguments: {
+                                    'id':
+                                        '${homeController.classes[index]["id"]}',
+                                    'semester':
+                                        "${homeController.classes[index]["semester"]}",
+                                    'class_name':
+                                        "${homeController.classes[index]["class_name"]}",
+                                  },
+                                );
                                 print(index);
                               },
                             );

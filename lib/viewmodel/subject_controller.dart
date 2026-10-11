@@ -182,7 +182,6 @@ class SubjectController extends GetxController {
   }
 
   //start attendance
-  List<Map<String, dynamic>> startAttendance = [];
 
   late final RealtimeChannel startattendancechannel;
 
@@ -242,6 +241,7 @@ class SubjectController extends GetxController {
     }
   }
 
+  Map<String, dynamic> startAttendance = {};
   Future<void> fetchattendancedata(String attendaceid) async {
     try {
       attendanceisloading = true;
@@ -249,17 +249,19 @@ class SubjectController extends GetxController {
       final response = await supabase
           .from('start_attendance')
           .select()
-          .eq('classid', attendaceid);
+          .eq('id', attendaceid)
+          .single();
+      ;
       ;
 
-      startAttendance = List<Map<String, dynamic>>.from(response);
+      startAttendance = response;
 
-      print("Total durations: ${duration.length}");
+      print("Total Attendance: ${startAttendance.length}");
       print(duration);
 
       update();
     } catch (e) {
-      print("Error fetching duration: $e");
+      print("Error fetching Attendance: $e");
     } finally {
       attendanceisloading = false;
       update();
