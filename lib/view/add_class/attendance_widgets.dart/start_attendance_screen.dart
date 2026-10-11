@@ -1,10 +1,11 @@
 import 'package:als/auth/custom_widgets/custom_button_two.dart';
 import 'package:als/auth/custom_widgets/custom_text.dart';
 import 'package:als/auth/custom_widgets/custom_text_field.dart';
+import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
-import 'package:als/home/add_class/attendance_widgets.dart/attendance_checks.dart';
-import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
-import 'package:als/home/custom_homepage_widgets.dart/custom_dropdown.dart';
+import 'package:als/view/add_class/attendance_widgets.dart/attendance_checks.dart';
+import 'package:als/view/custom_homepage_widgets.dart/custom_appbar.dart';
+import 'package:als/view/custom_homepage_widgets.dart/custom_dropdown.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:als/viewmodel/subject_controller.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,9 @@ class StartAttendanceScreen extends StatefulWidget {
 class _StartAttendanceScreenState extends State<StartAttendanceScreen> {
   final Map<String, dynamic> newclass = Get.arguments;
   late SubjectController subjectController;
+  String selectedsubject = "";
+  String selectedduration = "";
+  String selecteddate = "";
   @override
   void initState() {
     super.initState();
@@ -46,6 +50,9 @@ class _StartAttendanceScreenState extends State<StartAttendanceScreen> {
             child: Column(
               children: [
                 CustomDropdown(
+                  onSelected: (value) {
+                    // selectedsubject = value;
+                  },
                   items: subjectController.subject.map((subject) {
                     return DropdownMenuEntry<String>(
                       value: subject['id'].toString() ?? '',
@@ -106,7 +113,12 @@ class _StartAttendanceScreenState extends State<StartAttendanceScreen> {
                 radius: 10,
                 prefixwidget: Icon(Icons.qr_code, color: ColorPalette.white),
                 title: "Generate QR Code",
-                callback: () {},
+                callback: () {
+                  Get.offAllNamed(
+                    AppRoutes.GenerateQrScreen,
+                    arguments: {newclass},
+                  );
+                },
               ),
             ),
           ),

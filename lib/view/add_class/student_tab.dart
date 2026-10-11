@@ -2,7 +2,7 @@ import 'package:als/auth/custom_widgets/custom_button.dart';
 import 'package:als/auth/custom_widgets/custom_button_two.dart';
 import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
-import 'package:als/home/add_class/custom_student_tile.dart';
+import 'package:als/view/add_class/custom_student_tile.dart';
 import 'package:als/viewmodel/auth_controller.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:flutter/material.dart';

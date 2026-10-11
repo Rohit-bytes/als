@@ -2,14 +2,15 @@ import 'package:als/auth/choose_role.dart';
 import 'package:als/auth/teacher_login.dart';
 import 'package:als/auth/splash_screen.dart';
 import 'package:als/auth/teacher_register.dart';
-import 'package:als/home/add_class/add_classess.dart';
-import 'package:als/home/add_class/attendance_widgets.dart/start_attendance_screen.dart';
-import 'package:als/home/add_class/class_add_succesfully.dart';
-import 'package:als/home/add_class/enter_student_manually.dart';
-import 'package:als/home/add_class/upload_excel_sheet.dart';
-import 'package:als/home/add_subject/add_subject_manually.dart';
-import 'package:als/home/landing_page.dart';
-import 'package:als/home/view_all_classes.dart';
+import 'package:als/view/add_class/add_classess.dart';
+import 'package:als/view/add_class/attendance_widgets.dart/start_attendance_screen.dart';
+import 'package:als/view/add_class/class_add_succesfully.dart';
+import 'package:als/view/add_class/enter_student_manually.dart';
+import 'package:als/view/add_class/upload_excel_sheet.dart';
+import 'package:als/view/add_subject/add_subject_manually.dart';
+import 'package:als/view/generate_qr/generate_qr_screen.dart';
+import 'package:als/view/landing_page.dart';
+import 'package:als/view/view_all_classes.dart';
 import 'package:get/get.dart';
 
 import 'app_routes.dart';
@@ -85,6 +86,12 @@ class AppPages {
     GetPage(
       name: AppRoutes.StartAttendanceScreen,
       page: () => const StartAttendanceScreen(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.GenerateQrScreen,
+      page: () => const GenerateQrScreen(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

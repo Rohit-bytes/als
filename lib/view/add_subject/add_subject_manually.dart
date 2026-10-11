@@ -2,7 +2,7 @@ import 'package:als/auth/custom_widgets/custom_button_two.dart';
 import 'package:als/auth/custom_widgets/custom_text.dart';
 import 'package:als/auth/custom_widgets/custom_text_field.dart';
 import 'package:als/core/color_pallete.dart';
-import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
+import 'package:als/view/custom_homepage_widgets.dart/custom_appbar.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:als/viewmodel/subject_controller.dart';
 import 'package:flutter/material.dart';

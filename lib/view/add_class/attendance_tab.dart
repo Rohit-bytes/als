@@ -1,8 +1,8 @@
 import 'package:als/auth/custom_widgets/custom_button_two.dart';
 import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
-import 'package:als/home/add_class/attendance_widgets.dart/today_attendance.dart';
-import 'package:als/home/custom_homepage_widgets.dart/custom_color_button.dart';
+import 'package:als/view/add_class/attendance_widgets.dart/today_attendance.dart';
+import 'package:als/view/custom_homepage_widgets.dart/custom_color_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

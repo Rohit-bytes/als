@@ -1,6 +1,6 @@
 import 'package:als/auth/custom_widgets/custom_button.dart';
 import 'package:als/auth/custom_widgets/custom_text.dart';
-import 'package:als/home/custom_homepage_widgets.dart/custom_color_button.dart';
+import 'package:als/view/custom_homepage_widgets.dart/custom_color_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

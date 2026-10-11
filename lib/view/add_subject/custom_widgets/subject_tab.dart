@@ -1,4 +1,4 @@
-import 'package:als/home/add_subject/custom_widgets/custom_subject_tile.dart';
+import 'package:als/view/add_subject/custom_widgets/custom_subject_tile.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:als/viewmodel/subject_controller.dart';
 import 'package:flutter/material.dart';

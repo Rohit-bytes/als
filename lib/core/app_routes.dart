@@ -12,4 +12,5 @@ class AppRoutes {
   static const String enterStudentManually = '/enterStudentManually';
   static const String enterSubjectManually = '/enterSubjectManually';
   static const String StartAttendanceScreen = '/startAttendanceScreen';
+  static const String GenerateQrScreen = '/generateQrScreen';
 }

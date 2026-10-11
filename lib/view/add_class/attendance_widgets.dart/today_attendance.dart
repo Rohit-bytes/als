@@ -1,9 +1,9 @@
 import 'package:als/auth/custom_widgets/custom_circle_button.dart';
 import 'package:als/auth/custom_widgets/custom_text.dart';
 import 'package:als/core/color_pallete.dart';
-import 'package:als/home/add_class/attendance_widgets.dart/attendance_count_card.dart';
-import 'package:als/home/add_class/attendance_widgets.dart/attendance_status.dart';
-import 'package:als/home/add_class/attendance_widgets.dart/progress_card.dart';
+import 'package:als/view/add_class/attendance_widgets.dart/attendance_count_card.dart';
+import 'package:als/view/add_class/attendance_widgets.dart/attendance_status.dart';
+import 'package:als/view/add_class/attendance_widgets.dart/progress_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';

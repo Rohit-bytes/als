@@ -1,8 +1,8 @@
 import 'package:als/auth/custom_widgets/custom_circle_button.dart';
 import 'package:als/core/color_pallete.dart';
-import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
-import 'package:als/home/homepage.dart';
-import 'package:als/home/profile_screen.dart';
+import 'package:als/view/custom_homepage_widgets.dart/custom_appbar.dart';
+import 'package:als/view/homepage.dart';
+import 'package:als/view/profile_screen.dart';
 import 'package:als/main.dart';
 import 'package:als/viewmodel/auth_controller.dart';
 import 'package:als/viewmodel/home_controller.dart';

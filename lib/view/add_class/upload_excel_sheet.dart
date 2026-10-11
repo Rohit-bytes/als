@@ -1,11 +1,11 @@
 import 'package:als/auth/custom_widgets/custom_button_two.dart';
 import 'package:als/core/app_routes.dart';
 import 'package:als/core/color_pallete.dart';
-import 'package:als/home/add_class/attendance_tab.dart';
-import 'package:als/home/add_class/student_tab.dart';
-import 'package:als/home/add_subject/custom_widgets/subject_tab.dart';
-import 'package:als/home/custom_homepage_widgets.dart/custom_appbar.dart';
-import 'package:als/home/custom_homepage_widgets.dart/custom_tabbar.dart';
+import 'package:als/view/add_class/attendance_tab.dart';
+import 'package:als/view/add_class/student_tab.dart';
+import 'package:als/view/add_subject/custom_widgets/subject_tab.dart';
+import 'package:als/view/custom_homepage_widgets.dart/custom_appbar.dart';
+import 'package:als/view/custom_homepage_widgets.dart/custom_tabbar.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
