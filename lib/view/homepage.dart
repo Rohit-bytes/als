@@ -182,6 +182,7 @@ class Homepage extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       UpcomingClassesWidget(),
+                      SizedBox(height: 10.h),
                     ],
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:als/auth/custom_widgets/custom_snackbar.dart';
@@ -19,6 +20,7 @@ class SubjectController extends GetxController {
   @override
   void onClose() {
     supabase.removeChannel(subjectChannel);
+    _timer?.cancel();
     super.onClose();
   }
 
@@ -266,5 +268,34 @@ class SubjectController extends GetxController {
       attendanceisloading = false;
       update();
     }
+  }
+
+  Timer? _timer;
+  int remainingSeconds = 0;
+
+  void startDurationTimer(dynamic duration) {
+    _timer?.cancel();
+
+    remainingSeconds = int.tryParse(duration.toString()) ?? 0;
+    update();
+
+    if (remainingSeconds <= 0) return;
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingSeconds > 0) {
+        remainingSeconds--;
+        update();
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  String get formattedTime {
+    final h = remainingSeconds ~/ 3600;
+    final m = ((remainingSeconds % 3600) ~/ 60).toString().padLeft(2, '0');
+    final s = (remainingSeconds % 60).toString().padLeft(2, '0');
+
+    return h > 0 ? "$h:$m:$s" : "$m:$s";
   }
 }
