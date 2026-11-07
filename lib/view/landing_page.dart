@@ -1,7 +1,8 @@
 import 'package:als/auth/custom_widgets/custom_circle_button.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/view/custom_homepage_widgets.dart/custom_appbar.dart';
-import 'package:als/view/homepage.dart';
+import 'package:als/view/student_screens/student_homepage.dart';
+import 'package:als/view/teacher_homepage.dart';
 import 'package:als/view/profile_screen.dart';
 import 'package:als/main.dart';
 import 'package:als/viewmodel/auth_controller.dart';
@@ -10,8 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const new({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final auth = Get.find<AuthController>();
+    if (auth.user != null) auth.getUserDetails();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +82,12 @@ class LandingPage extends StatelessWidget {
                   onPageChanged: (value) {
                     homeController.changeIndex(value);
                   },
-                  children: [Homepage(), ProfileScreen()],
+                  children: [
+                    authController.isStudent == true
+                        ? StudentHomepage()
+                        : TeacherHomepage(),
+                    ProfileScreen(),
+                  ],
                 ),
               ),
               bottomNavigationBar: Theme(

@@ -215,6 +215,8 @@ class AuthController extends GetxController {
   }
 
   bool isStudent = false;
+
+  void checkIsStudent(bool check) {}
   void changeIsStudent(bool check) {
     isStudent = check;
     print("isStudent is change to " + isStudent.toString());

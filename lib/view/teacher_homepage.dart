@@ -16,7 +16,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
-class Homepage extends StatelessWidget {
+class TeacherHomepage extends StatelessWidget {
   const new({super.key});
 
   @override
