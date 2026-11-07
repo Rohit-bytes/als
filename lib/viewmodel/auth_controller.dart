@@ -1,3 +1,4 @@
+import 'package:als/auth/custom_widgets/custom_snackbar.dart';
 import 'package:als/core/app_routes.dart';
 import 'package:als/main.dart';
 import 'package:als/model/userDetail.dart';
@@ -38,16 +39,16 @@ class AuthController extends GetxController {
       }
     } on AuthException catch (e) {
       print(e);
-      Get.snackbar(
-        "Login Failed",
-        e.message,
-        snackPosition: SnackPosition.BOTTOM,
+      CustomSnackbar.error(
+        title: "Login Failed",
+        message: e.message,
+        // snackPosition: SnackPosition.BOTTOM,
       );
     } catch (e) {
-      Get.snackbar(
-        "Error",
-        "Something went wrong. Please try again.",
-        snackPosition: SnackPosition.BOTTOM,
+      CustomSnackbar.error(
+        title: "Error",
+        message: "Something went wrong. Please try again.",
+        // snackPosition: SnackPosition.BOTTOM,
       );
     } finally {
       isLoading = false;
@@ -97,6 +98,7 @@ class AuthController extends GetxController {
   TextEditingController regpasscontrol = TextEditingController();
   TextEditingController regreppasscontrol = TextEditingController();
   String gender = '';
+  String regbatch = '';
 
   void toggleGender(String value) {
     gender = value;
@@ -110,6 +112,7 @@ class AuthController extends GetxController {
   String? signupPasswordError;
   String? confirmPasswordError;
   String? gendererror;
+  String? batcherror;
 
   // ================= SIGNUP VALIDATION =================
 
@@ -120,6 +123,7 @@ class AuthController extends GetxController {
     String password,
     String repPassword,
     String gender,
+    String batch,
   ) async {
     // Clear previous errors
     nameError = null;
@@ -128,6 +132,7 @@ class AuthController extends GetxController {
     signupPasswordError = null;
     confirmPasswordError = null;
     gendererror = null;
+    batcherror = null;
 
     bool isValid = true;
 
@@ -147,7 +152,11 @@ class AuthController extends GetxController {
     }
     // gender nvalidation
     if (gender.trim().isEmpty) {
-      enrollNoError = "Gender is required";
+      gendererror = "Gender is required";
+      isValid = false;
+    }
+    if (batch.trim().isEmpty) {
+      batcherror = "Please select your class batch";
       isValid = false;
     }
 
@@ -196,6 +205,7 @@ class AuthController extends GetxController {
       password,
       repPassword,
       gender,
+      batch,
       isStudent,
     );
   }
@@ -225,6 +235,7 @@ class AuthController extends GetxController {
     String password,
     String repPassword,
     String gender,
+    String batch,
     bool isStudent,
   ) async {
     try {
@@ -253,23 +264,23 @@ class AuthController extends GetxController {
             'enrollment_number': enrollno.trim(),
             'is_student': isStudent,
             'gender': gender,
+            if (isStudent == true) 'class_id': batch,
           });
       await getUserDetails();
 
       Get.offAllNamed(AppRoutes.landingpage);
     } on AuthException catch (e) {
-      Get.snackbar(
-        "Signup Failed",
-        e.message,
-        snackPosition: SnackPosition.BOTTOM,
+      CustomSnackbar.error(
+        title: "Signup Failed",
+        message: e.message,
+        // snackPosition: SnackPosition.BOTTOM,
       );
       print(e);
     } catch (e) {
       print(e);
-      Get.snackbar(
-        "Error",
-        "Something went wrong. Please try again.",
-        snackPosition: SnackPosition.BOTTOM,
+      CustomSnackbar.error(
+        title: "Error",
+        message: "Something went wrong. Please try again.",
       );
     } finally {
       isLoading = false;

@@ -40,6 +40,8 @@ class CustomDropdown extends StatelessWidget {
 
         DropdownMenu<String>(
           width: double.infinity,
+          enableFilter: true,
+          enableSearch: true,
 
           initialSelection: null,
 
