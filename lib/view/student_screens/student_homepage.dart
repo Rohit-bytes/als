@@ -80,23 +80,29 @@ class _StudentHomepageState extends State<StudentHomepage> {
                       ),
                     ),
                     SizedBox(height: 10.h),
-                    SizedBox(
-                      height: 100,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: subjectController.subject.length,
-                        itemBuilder: (context, index) {
-                          final s = subjectController.subject;
-                          return CustomSubjectTile(
-                            subjectName: s[index]["subject_name"],
-                            credits: s[index]["credits"],
-                            index: index,
-                            onTap: () {},
-                          );
-                        },
-                      ),
-                    ),
+                    subjectController.isloading == true
+                        ? Container(
+                            height: 30.h,
+                            width: 30.w,
+                            child: Center(child: CircularProgressIndicator()),
+                          )
+                        : SizedBox(
+                            height: 100,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: subjectController.subject.length,
+                              itemBuilder: (context, index) {
+                                final s = subjectController.subject;
+                                return CustomSubjectTile(
+                                  subjectName: s[index]["subject_name"],
+                                  credits: s[index]["credits"],
+                                  index: index,
+                                  onTap: () {},
+                                );
+                              },
+                            ),
+                          ),
                   ],
                 ),
               ),
