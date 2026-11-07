@@ -16,7 +16,7 @@ class CustomTrackers extends StatelessWidget {
       width: 110.w,
       decoration: BoxDecoration(
         color: color ?? ColorPalette.primary,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(10.r),
       ),
 
       child: Padding(

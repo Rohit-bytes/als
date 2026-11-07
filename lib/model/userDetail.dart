@@ -1,5 +1,6 @@
 class UserDetails {
   final String id;
+  final String classid;
   final String name;
   final String email;
   final String enrollmentNumber;
@@ -10,6 +11,7 @@ class UserDetails {
 
   UserDetails({
     required this.id,
+    required this.classid,
     required this.name,
     required this.email,
     required this.enrollmentNumber,
@@ -22,6 +24,7 @@ class UserDetails {
   factory UserDetails.fromMap(Map<String, dynamic> map) {
     return UserDetails(
       id: map['id']?.toString() ?? '',
+      classid: map['class_id']?.toString() ?? '',
       name: map['name']?.toString() ?? '',
       email: map['email']?.toString() ?? '',
       gender: map["gender"]?.toString() ?? "",
