@@ -1,3 +1,4 @@
+import 'package:als/auth/custom_widgets/custom_circle_button.dart';
 import 'package:als/core/color_pallete.dart';
 import 'package:als/view/add_subject/custom_widgets/custom_subject_tile.dart';
 import 'package:als/view/custom_homepage_widgets.dart/custom_appbar.dart';
@@ -5,6 +6,7 @@ import 'package:als/viewmodel/subject_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class SubjectAttendance extends StatefulWidget {
   final int subject_id;
@@ -52,7 +54,20 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
 
         return Scaffold(
           backgroundColor: ColorPalette.background,
-          appBar: CustomAppBar(title: subjectName, fontsize: 16),
+          appBar: CustomAppBar(
+            title: subjectName,
+            fontsize: 16,
+            actions: [
+              CustomCircleButton(
+                icon: Icons.refresh,
+                iconsize: 18,
+                onPressed: () {
+                  fetchdetails();
+                },
+                height: 35,
+              ),
+            ],
+          ),
 
           body: SafeArea(
             child: SingleChildScrollView(
@@ -193,13 +208,23 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
 
                   const SizedBox(height: 8),
 
-                  _classTile(
-                    ontap: () {},
-                    icon: Icons.event_available,
-                    title: subjectName,
-                    subtitle: 'Today • 10:00 AM - 11:00 AM',
-                    status: 'Next Class',
-                    isUpcoming: true,
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: s.upcomingclasses.length,
+                    itemBuilder: (context, index) {
+                      return _classTile(
+                        ontap: () {},
+                        icon: Icons.event_available,
+                        title:
+                            "Attendance Id ${s.upcomingclasses[index]["id"]} | ${subjectName}",
+                        subtitle:
+                            '${DateFormat('dd MMM yyyy, hh:mm a').format(DateTime.parse(s.upcomingclasses[index]["created_at"])).toUpperCase()}',
+                        status:
+                            'Duration ${s.upcomingclasses[index]["duration"]} Sec',
+                        isUpcoming: true,
+                      );
+                    },
                   ),
 
                   const SizedBox(height: 18),
@@ -415,79 +440,85 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
     required bool isUpcoming,
     VoidCallback? ontap,
   }) {
-    return GestureDetector(
-      onTap: ontap,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 2),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.blue.withOpacity(0.05)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              height: 38,
-              width: 38,
-              decoration: BoxDecoration(
-                color: isUpcoming
-                    ? const Color(0xFFE5F0FF)
-                    : const Color(0xFFE1F9EE),
-                borderRadius: BorderRadius.circular(11),
-              ),
-              child: Icon(
-                icon,
-                color: isUpcoming ? Colors.blue : Colors.green,
-                size: 21,
-              ),
-            ),
-
-            const SizedBox(width: 10),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  if (subtitle.isNotEmpty) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: Colors.blueGrey,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
-              decoration: BoxDecoration(
-                color: isUpcoming
-                    ? const Color(0xFFE5F0FF)
-                    : const Color(0xFFE1F9EE),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                status,
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: GestureDetector(
+        onTap: ontap,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.blue.withOpacity(0.05)),
+          ),
+          child: Row(
+            children: [
+              Container(
+                height: 38,
+                width: 38,
+                decoration: BoxDecoration(
+                  color: isUpcoming
+                      ? const Color(0xFFE5F0FF)
+                      : const Color(0xFFE1F9EE),
+                  borderRadius: BorderRadius.circular(11),
+                ),
+                child: Icon(
+                  icon,
                   color: isUpcoming ? Colors.blue : Colors.green,
+                  size: 21,
                 ),
               ),
-            ),
-          ],
+
+              const SizedBox(width: 10),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    if (subtitle.isNotEmpty) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        subtitle,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 11,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: isUpcoming
+                      ? const Color(0xFFE5F0FF)
+                      : const Color(0xFFE1F9EE),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  status,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: isUpcoming ? Colors.blue : Colors.green,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

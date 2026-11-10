@@ -317,7 +317,7 @@ class SubjectController extends GetxController {
   }
 
   //show upcoming attendance of student
-  Map<String, dynamic> upcomingclasses = {};
+  List<Map<String, dynamic>> upcomingclasses = [];
   bool isloadingupcomingclasses = false;
   Future<void> fetchupcomingclasses(int subjectid) async {
     try {
@@ -325,9 +325,8 @@ class SubjectController extends GetxController {
       final response = await supabase
           .from('start_attendance')
           .select()
-          .eq('subject_id', subjectid)
-          .single();
-
+          .eq('subject_id', subjectid);
+      print(upcomingclasses);
       upcomingclasses = response;
       update();
     } catch (e) {
