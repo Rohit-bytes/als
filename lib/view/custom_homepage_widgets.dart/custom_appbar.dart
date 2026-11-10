@@ -10,6 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
   final Widget? leadingwidget;
   final double? fontsize;
+  final double? height;
 
   const CustomAppBar({
     super.key,
@@ -17,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onBack,
     this.fontsize,
     this.actions,
+    this.height,
     this.showBackButton = true,
     this.leadingwidget,
   });
@@ -25,7 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       surfaceTintColor: Colors.transparent,
-      toolbarHeight: 40.h,
+      toolbarHeight: height ?? 40.h,
       backgroundColor: ColorPalette.background,
       elevation: 0,
       centerTitle: true,

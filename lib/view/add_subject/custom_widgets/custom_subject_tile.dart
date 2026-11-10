@@ -11,6 +11,7 @@ class CustomSubjectTile extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onMoreTap;
   final int index;
+  final bool? showdeletebutton;
 
   const CustomSubjectTile({
     super.key,
@@ -20,6 +21,7 @@ class CustomSubjectTile extends StatelessWidget {
     this.icon = Icons.menu_book_rounded,
     this.onTap,
     this.onMoreTap,
+    this.showdeletebutton = true,
   });
 
   // Colors automatically selected according to index
@@ -106,28 +108,32 @@ class CustomSubjectTile extends StatelessWidget {
                 ),
 
                 // More button
-                InkWell(
-                  onTap: subjectController.isloading == true ? null : onMoreTap,
-                  borderRadius: BorderRadius.circular(20.r),
-                  child: Padding(
-                    padding: EdgeInsets.all(6.r),
-                    child: subjectController.loadingIndex == true
-                        ? Container(
-                            height: 10,
-                            width: 10,
+                showdeletebutton == true
+                    ? InkWell(
+                        onTap: subjectController.isloading == true
+                            ? null
+                            : onMoreTap,
+                        borderRadius: BorderRadius.circular(20.r),
+                        child: Padding(
+                          padding: EdgeInsets.all(6.r),
+                          child: subjectController.loadingIndex == true
+                              ? Container(
+                                  height: 10,
+                                  width: 10,
 
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: ColorPalette.error,
-                            ),
-                          )
-                        : Icon(
-                            Icons.delete,
-                            size: 22,
-                            color: ColorPalette.error,
-                          ),
-                  ),
-                ),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: ColorPalette.error,
+                                  ),
+                                )
+                              : Icon(
+                                  Icons.delete,
+                                  size: 22,
+                                  color: ColorPalette.error,
+                                ),
+                        ),
+                      )
+                    : SizedBox(),
               ],
             ),
           ),

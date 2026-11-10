@@ -83,7 +83,17 @@ class _LandingPageState extends State<LandingPage> {
                     homeController.changeIndex(value);
                   },
                   children: [
-                    authController.isStudent == true
+                    (authController.isLoading == true)
+                        ? Container(
+                            height: 10,
+                            width: 10,
+
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: ColorPalette.error,
+                            ),
+                          )
+                        : authController.isStudent == true
                         ? StudentHomepage()
                         : TeacherHomepage(),
                     ProfileScreen(),

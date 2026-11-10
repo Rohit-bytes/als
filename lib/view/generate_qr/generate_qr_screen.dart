@@ -32,7 +32,7 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
     super.initState();
 
     final subjectController = Get.find<SubjectController>();
-    final attendanceid = Get.arguments.toString();
+    final attendanceid = Get.arguments;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await subjectController.fetchattendancedata(attendanceid);

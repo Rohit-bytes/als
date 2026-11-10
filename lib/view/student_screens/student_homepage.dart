@@ -3,6 +3,7 @@ import 'package:als/core/color_pallete.dart';
 import 'package:als/view/add_subject/custom_widgets/custom_subject_tile.dart';
 import 'package:als/view/custom_homepage_widgets.dart/custom_title_anchor.dart';
 import 'package:als/view/custom_homepage_widgets.dart/custom_trackers.dart';
+import 'package:als/view/student_screens/subject_attendance.dart';
 import 'package:als/viewmodel/auth_controller.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:als/viewmodel/subject_controller.dart';
@@ -79,29 +80,32 @@ class _StudentHomepageState extends State<StudentHomepage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 10.h),
                     subjectController.isloading == true
                         ? Container(
                             height: 30.h,
                             width: 30.w,
                             child: Center(child: CircularProgressIndicator()),
                           )
-                        : SizedBox(
-                            height: 100,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: subjectController.subject.length,
-                              itemBuilder: (context, index) {
-                                final s = subjectController.subject;
-                                return CustomSubjectTile(
-                                  subjectName: s[index]["subject_name"],
-                                  credits: s[index]["credits"],
-                                  index: index,
-                                  onTap: () {},
-                                );
-                              },
-                            ),
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: subjectController.subject.length,
+                            itemBuilder: (context, index) {
+                              final s = subjectController.subject;
+                              return CustomSubjectTile(
+                                showdeletebutton: false,
+                                subjectName: s[index]["subject_name"],
+                                credits: s[index]["credits"],
+                                index: index,
+                                onTap: () {
+                                  Get.to(
+                                    () => SubjectAttendance(
+                                      subject_id: s[index]["id"],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                   ],
                 ),

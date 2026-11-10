@@ -107,6 +107,25 @@ class SubjectController extends GetxController {
     }
   }
 
+  Map<String, dynamic> singlesubjectdata = {};
+
+  Future<void> fetchsubject(int subjectid) async {
+    try {
+      final subjectdata = await supabase
+          .from('subject')
+          .select()
+          .eq("id", subjectid)
+          .maybeSingle();
+
+      singlesubjectdata = subjectdata ?? {};
+
+      print(singlesubjectdata);
+      update();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   bool isloading = false;
   //insert new subject
   Future<void> addNewSubject({
@@ -253,8 +272,6 @@ class SubjectController extends GetxController {
           .select()
           .eq('id', attendaceid)
           .single();
-      ;
-      ;
 
       startAttendance = response;
 
@@ -297,5 +314,27 @@ class SubjectController extends GetxController {
     final s = (remainingSeconds % 60).toString().padLeft(2, '0');
 
     return h > 0 ? "$h:$m:$s" : "$m:$s";
+  }
+
+  //show upcoming attendance of student
+  Map<String, dynamic> upcomingclasses = {};
+  bool isloadingupcomingclasses = false;
+  Future<void> fetchupcomingclasses(int subjectid) async {
+    try {
+      isloadingupcomingclasses = true;
+      final response = await supabase
+          .from('start_attendance')
+          .select()
+          .eq('subject_id', subjectid)
+          .single();
+
+      upcomingclasses = response;
+      update();
+    } catch (e) {
+      print("Error in fetching upcoming classes $e");
+    } finally {
+      isloadingupcomingclasses = false;
+      update();
+    }
   }
 }

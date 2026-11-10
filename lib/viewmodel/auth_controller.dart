@@ -292,6 +292,7 @@ class AuthController extends GetxController {
 
   //get user data
   UserDetails? userDetails;
+  bool isloadinguserDetails = false;
 
   Future<void> getUserDetails() async {
     final user = supabase.auth.currentUser;
@@ -299,6 +300,7 @@ class AuthController extends GetxController {
     if (user == null) return;
 
     try {
+      isloadinguserDetails = true;
       // First check student profile
       final studentResponse = await supabase
           .from('student_profiles')
@@ -333,6 +335,9 @@ class AuthController extends GetxController {
       // Get.toNamed(AppRoutes.chooserole);
     } catch (e) {
       print("Error getting user details: $e");
+    } finally {
+      isloadinguserDetails = false;
+      update();
     }
   }
 }
