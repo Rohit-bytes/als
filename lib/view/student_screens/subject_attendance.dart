@@ -211,7 +211,9 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: s.upcomingclasses.length,
+                    itemCount: s.upcomingclasses.length > 3
+                        ? 3
+                        : s.upcomingclasses.length,
                     itemBuilder: (context, index) {
                       return _classTile(
                         ontap: () {},
@@ -234,20 +236,21 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
 
                   const SizedBox(height: 8),
 
-                  _classTile(
-                    icon: Icons.check_circle,
-                    title: '17 Sep 2026 • 10:00 AM',
-                    subtitle: '',
-                    status: 'Present',
-                    isUpcoming: false,
-                  ),
-
-                  _classTile(
-                    icon: Icons.check_circle,
-                    title: '15 Sep 2026 • 10:00 AM',
-                    subtitle: '',
-                    status: 'Present',
-                    isUpcoming: false,
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: s.upcomingclasses.length,
+                    itemBuilder: (context, index) {
+                      return _classTile(
+                        icon: Icons.check_circle,
+                        subtitle:
+                            '${DateFormat('dd MMM yyyy, hh:mm a').format(DateTime.parse(s.upcomingclasses[index]["created_at"])).toUpperCase()}',
+                        title:
+                            "Attendance Id ${s.upcomingclasses[index]["id"]} | ${subjectName}",
+                        status: 'Present',
+                        isUpcoming: false,
+                      );
+                    },
                   ),
 
                   const SizedBox(height: 18),

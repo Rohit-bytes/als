@@ -325,7 +325,8 @@ class SubjectController extends GetxController {
       final response = await supabase
           .from('start_attendance')
           .select()
-          .eq('subject_id', subjectid);
+          .eq('subject_id', subjectid)
+          .order('created_at', ascending: false);
       print(upcomingclasses);
       upcomingclasses = response;
       update();
