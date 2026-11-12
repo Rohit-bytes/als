@@ -503,7 +503,7 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
                   color: isstarted == false
                       ? const Color.fromARGB(255, 255, 239, 229)
                       : const Color(0xFFE1F9EE),
-                  borderRadius: BorderRadius.circular(11),
+                  borderRadius: BorderRadius.circular(50),
                 ),
                 child: Icon(
                   playbutton ?? (isstarted ? Icons.play_arrow : Icons.stop),

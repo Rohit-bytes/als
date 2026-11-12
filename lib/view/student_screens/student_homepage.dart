@@ -19,14 +19,18 @@ class StudentHomepage extends StatefulWidget {
 }
 
 class _StudentHomepageState extends State<StudentHomepage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  void fetch() {
     final subjectController = Get.find<SubjectController>();
     final authController = Get.find<AuthController>();
 
     subjectController.fetchClassSubject(authController.userDetails!.classid);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetch();
   }
 
   @override
@@ -39,75 +43,88 @@ class _StudentHomepageState extends State<StudentHomepage> {
               backgroundColor: ColorPalette.background,
 
               body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        CustomText(
-                          "Hello,\n${authController.userDetails?.name ?? "User"} 👋",
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomTrackers(
-                          color: ColorPalette.primaryLight,
-                          title: "0",
-                          subtitle: "Total Classes".tr,
-                        ),
-                        CustomTrackers(
-                          color: ColorPalette.Green,
-                          title: "0%",
-                          subtitle: 'Attendance'.tr,
-                        ),
-                        CustomTrackers(
-                          color: ColorPalette.error,
-                          title: "100%",
-                          subtitle: "Classes Missed",
-                        ),
-                      ],
-                    ),
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    final subjectController = Get.find<SubjectController>();
+                    final authController = Get.find<AuthController>();
 
-                    SizedBox(height: 10.h),
-
-                    CustomTitleAnchor(
-                      title: "Subjects Schedule",
-                      widget: Row(
+                    subjectController.fetchClassSubject(
+                      authController.userDetails!.classid,
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
-                          TextButton(child: Text("View All"), onPressed: () {}),
+                          CustomText(
+                            "Hello,\n${authController.userDetails?.name ?? "User"} 👋",
+                          ),
                         ],
                       ),
-                    ),
-                    subjectController.isloading == true
-                        ? Container(
-                            height: 30.h,
-                            width: 30.w,
-                            child: Center(child: CircularProgressIndicator()),
-                          )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: subjectController.subject.length,
-                            itemBuilder: (context, index) {
-                              final s = subjectController.subject;
-                              return CustomSubjectTile(
-                                showdeletebutton: false,
-                                subjectName: s[index]["subject_name"],
-                                credits: s[index]["credits"],
-                                index: index,
-                                onTap: () {
-                                  Get.to(
-                                    () => SubjectAttendance(
-                                      subject_id: s[index]["id"],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
+                      SizedBox(height: 10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomTrackers(
+                            color: ColorPalette.primaryLight,
+                            title: "0",
+                            subtitle: "Total Classes".tr,
                           ),
-                  ],
+                          CustomTrackers(
+                            color: ColorPalette.Green,
+                            title: "0%",
+                            subtitle: 'Attendance'.tr,
+                          ),
+                          CustomTrackers(
+                            color: ColorPalette.error,
+                            title: "100%",
+                            subtitle: "Classes Missed",
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 10.h),
+
+                      CustomTitleAnchor(
+                        title: "Subjects Schedule",
+                        widget: Row(
+                          children: [
+                            TextButton(
+                              child: Text("View All"),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                      subjectController.isloading == true
+                          ? Container(
+                              height: 30.h,
+                              width: 30.w,
+                              child: Center(child: CircularProgressIndicator()),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: subjectController.subject.length,
+                              itemBuilder: (context, index) {
+                                final s = subjectController.subject;
+                                return CustomSubjectTile(
+                                  showdeletebutton: false,
+                                  subjectName: s[index]["subject_name"],
+                                  credits: s[index]["credits"],
+                                  index: index,
+                                  onTap: () {
+                                    Get.to(
+                                      () => SubjectAttendance(
+                                        subject_id: s[index]["id"],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                    ],
+                  ),
                 ),
               ),
             );

@@ -53,25 +53,25 @@ class _LandingPageState extends State<LandingPage> {
 
                 showBackButton: false,
                 actions: [
-                  homeController.currentIndex == 1
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0,
-                            vertical: 8,
-                          ),
-                          child: Container(
-                            height: 40.h,
-                            width: 40.w,
-                            child: CustomCircleButton(
-                              icon: Icons.edit_outlined,
-                              iconsize: 16,
-                              onPressed: () {
-                                // supabase.auth.signOut();
-                              },
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
+                  // homeController.currentIndex == 1,
+                  // ? Padding(
+                  //     padding: const EdgeInsets.symmetric(
+                  //       horizontal: 8.0,
+                  //       vertical: 8,
+                  //     ),
+                  //     child: Container(
+                  //       height: 40.h,
+                  //       width: 40.w,
+                  //       child: CustomCircleButton(
+                  //         icon: Icons.edit_outlined,
+                  //         iconsize: 16,
+                  //         onPressed: () {
+                  //           // supabase.auth.signOut();
+                  //         },
+                  //       ),
+                  //     ),
+                  //   )
+                  // : SizedBox(),
                 ],
               ),
 

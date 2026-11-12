@@ -226,63 +226,62 @@ class ProfileScreen extends StatelessWidget {
 
                   SizedBox(height: 18.h),
 
-                  // =====================================================
-                  // ACCOUNT SETTINGS
-                  // =====================================================
-                  _sectionCard(
-                    title: 'Account Settings',
-                    icon: Icons.settings_outlined,
-                    children: [
-                      _settingTile(
-                        icon: Icons.edit_outlined,
-                        title: 'Edit Profile',
-                        onTap: () {
-                          // TODO
-                        },
-                      ),
+                  // // =====================================================
+                  // // ACCOUNT SETTINGS
+                  // // =====================================================
+                  // _sectionCard(
+                  //   title: 'Account Settings',
+                  //   icon: Icons.settings_outlined,
+                  //   children: [
+                  //     _settingTile(
+                  //       icon: Icons.edit_outlined,
+                  //       title: 'Edit Profile',
+                  //       onTap: () {
+                  //         // TODO
+                  //       },
+                  //     ),
 
-                      _divider(),
+                  //     _divider(),
 
-                      _settingTile(
-                        icon: Icons.lock_outline_rounded,
-                        title: 'Change Password',
-                        onTap: () {
-                          // TODO
-                        },
-                      ),
+                  //     _settingTile(
+                  //       icon: Icons.lock_outline_rounded,
+                  //       title: 'Change Password',
+                  //       onTap: () {
+                  //         // TODO
+                  //       },
+                  //     ),
 
-                      _divider(),
+                  //     _divider(),
 
-                      _settingTile(
-                        icon: Icons.palette_outlined,
-                        title: 'App Theme',
-                        onTap: () {
-                          // TODO
-                        },
-                      ),
+                  //     _settingTile(
+                  //       icon: Icons.palette_outlined,
+                  //       title: 'App Theme',
+                  //       onTap: () {
+                  //         // TODO
+                  //       },
+                  //     ),
 
-                      _divider(),
+                  //     _divider(),
 
-                      _settingTile(
-                        icon: Icons.help_outline_rounded,
-                        title: 'Help & Support',
-                        onTap: () {
-                          // TODO
-                        },
-                      ),
+                  //     _settingTile(
+                  //       icon: Icons.help_outline_rounded,
+                  //       title: 'Help & Support',
+                  //       onTap: () {
+                  //         // TODO
+                  //       },
+                  //     ),
 
-                      _divider(),
+                  //     _divider(),
 
-                      _settingTile(
-                        icon: Icons.info_outline_rounded,
-                        title: 'About App',
-                        onTap: () {
-                          // TODO
-                        },
-                      ),
-                    ],
-                  ),
-
+                  //     _settingTile(
+                  //       icon: Icons.info_outline_rounded,
+                  //       title: 'About App',
+                  //       onTap: () {
+                  //         // TODO
+                  //       },
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(height: 20.h),
 
                   // =====================================================

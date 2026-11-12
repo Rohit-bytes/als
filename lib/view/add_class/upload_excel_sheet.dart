@@ -36,74 +36,72 @@ class UploadExcelSheet extends StatelessWidget {
 
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // ================= CLASS HEADER =================
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: Color.lerp(
-                            ColorPalette.background,
-                            Colors.white,
-                            0.5,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
+            child: Column(
+              children: [
+                // ================= CLASS HEADER =================
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: Color.lerp(
+                          ColorPalette.background,
+                          Colors.white,
+                          0.5,
                         ),
-                        child: Center(
-                          child: Icon(
-                            Icons.school_sharp,
-                            color: Colors.blue,
-                            size: 60,
-                          ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.school_sharp,
+                          color: Colors.blue,
+                          size: 60,
                         ),
                       ),
+                    ),
 
-                      SizedBox(width: 10.w),
+                    SizedBox(width: 10.w),
 
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            className.toString(),
-                            style: TextStyle(
-                              color: ColorPalette.textPrimary,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800,
-                            ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          className.toString(),
+                          style: TextStyle(
+                            color: ColorPalette.textPrimary,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
                           ),
+                        ),
 
-                          Text(
-                            semester.toString(),
-                            style: TextStyle(
-                              color: ColorPalette.textSecondary,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
+                        Text(
+                          semester.toString(),
+                          style: TextStyle(
+                            color: ColorPalette.textSecondary,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
 
-                  SizedBox(height: 10.h),
+                SizedBox(height: 10.h),
 
-                  // ================= TAB BAR =================
-                  ClassTabBar(
-                    selectedIndex: homeController.tabIndex,
-                    onTabChanged: (index) {
-                      homeController.tabchange(index);
-                    },
-                  ),
-                  SizedBox(height: 8.h),
-                  // ================= TAB CONTENT =================
-                  _buildTab(homeController, newClass),
-                ],
-              ),
+                // ================= TAB BAR =================
+                ClassTabBar(
+                  selectedIndex: homeController.tabIndex,
+                  onTabChanged: (index) {
+                    homeController.tabchange(index);
+                  },
+                ),
+                SizedBox(height: 8.h),
+                // ================= TAB CONTENT =================
+                _buildTab(homeController, newClass),
+              ],
             ),
           ),
           floatingActionButton:
