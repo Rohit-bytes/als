@@ -21,9 +21,13 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
   void fetchdetails() async {
     try {
       await Get.find<SubjectController>().fetchsubject(widget.subject_id);
+
+      //maybe in future
+      // Get.find<SubjectController>().listenToUpcomingClasses(widget.subject_id);
       await Get.find<SubjectController>().fetchupcomingclasses(
         widget.subject_id,
       );
+      await Get.find<SubjectController>().fetchrecentclasses(widget.subject_id);
     } catch (e) {
       print(e);
     }
@@ -69,201 +73,212 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
             ],
           ),
 
-          body: SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // SUBJECT DETAILS
-                  CustomSubjectTile(
-                    subjectName: subjectName,
-                    credits: credits,
-                    index: 0,
-                    showdeletebutton: false,
+          body:
+              s.isloadingupcomingclasses == true ||
+                  s.singlesubjectdataloading == true
+              ? Center(
+                  child: Container(
+                    height: 30.h,
+                    width: 30.w,
+                    child: Center(child: CircularProgressIndicator()),
                   ),
-
-                  const SizedBox(height: 12),
-
-                  // MY ATTENDANCE
-                  _sectionCard(
+                )
+              : SafeArea(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'My Attendance',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'View Details  ›',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ],
+                        // SUBJECT DETAILS
+                        CustomSubjectTile(
+                          subjectName: subjectName,
+                          credits: credits,
+                          index: 0,
+                          showdeletebutton: false,
                         ),
 
-                        SizedBox(height: 10.h),
+                        const SizedBox(height: 12),
 
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Center(child: _attendanceCircle(0)),
-                            ),
-
-                            Container(
-                              width: 1,
-                              height: 105,
-                              color: Colors.grey.shade200,
-                            ),
-
-                            const SizedBox(width: 18),
-
-                            Expanded(
-                              child: Column(
+                        // MY ATTENDANCE
+                        _sectionCard(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  _attendanceInfo(
-                                    'Present',
-                                    '0',
-                                    Colors.green,
-                                    Icons.check_circle,
+                                  const Text(
+                                    'My Attendance',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                  _attendanceInfo(
-                                    'Absent',
-                                    '0',
-                                    Colors.red,
-                                    Icons.cancel,
-                                  ),
-                                  _attendanceInfo(
-                                    'Total Classes',
-                                    '0',
-                                    Colors.blueGrey,
-                                    Icons.person,
+                                  TextButton(
+                                    onPressed: () {},
+                                    child: const Text(
+                                      'View Details  ›',
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
+
+                              SizedBox(height: 10.h),
+
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Center(child: _attendanceCircle(0)),
+                                  ),
+
+                                  Container(
+                                    width: 1,
+                                    height: 105,
+                                    color: Colors.grey.shade200,
+                                  ),
+
+                                  const SizedBox(width: 18),
+
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        _attendanceInfo(
+                                          'Present',
+                                          '0',
+                                          Colors.green,
+                                          Icons.check_circle,
+                                        ),
+                                        _attendanceInfo(
+                                          'Absent',
+                                          '0',
+                                          Colors.red,
+                                          Icons.cancel,
+                                        ),
+                                        _attendanceInfo(
+                                          'Total Classes',
+                                          '0',
+                                          Colors.blueGrey,
+                                          Icons.person,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
+
+                        const SizedBox(height: 12),
+
+                        // // QUICK ACTIONS
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       child: _quickAction(
+                        //         'Class Schedule',
+                        //         Icons.event_available,
+                        //         Colors.blue,
+                        //         const Color(0xFFE6F0FF),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 5),
+                        //     Expanded(
+                        //       child: _quickAction(
+                        //         'Study Material',
+                        //         Icons.menu_book,
+                        //         Colors.deepPurple,
+                        //         const Color(0xFFF0E9FF),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 5),
+                        //     Expanded(
+                        //       child: _quickAction(
+                        //         'Assignments',
+                        //         Icons.assignment,
+                        //         Colors.orange,
+                        //         const Color(0xFFFFF2D9),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 5),
+                        //     Expanded(
+                        //       child: _quickAction(
+                        //         'Attendance History',
+                        //         Icons.bar_chart,
+                        //         Colors.green,
+                        //         const Color(0xFFE4FAF0),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        const SizedBox(height: 18),
+
+                        // UPCOMING CLASS
+                        _sectionHeading('Upcoming Class'),
+
+                        const SizedBox(height: 8),
+
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: s.upcomingclasses.length > 3
+                              ? 3
+                              : s.upcomingclasses.length,
+                          itemBuilder: (context, index) {
+                            return _classTile(
+                              isstarted: s.startattendance,
+                              playbutton: Icons.play_arrow,
+                              ontap: () {},
+                              icon: Icons.event_available,
+                              title:
+                                  "Attendance Id ${s.upcomingclasses[index]["id"]} | ${subjectName}",
+                              subtitle:
+                                  '${DateFormat('dd MMM yyyy, hh:mm a').format(DateTime.parse(s.upcomingclasses[index]["date"])).toUpperCase()}',
+                              status:
+                                  'Duration ${s.upcomingclasses[index]["duration"]} Sec',
+                              isUpcoming: true,
+                            );
+                          },
+                        ),
+
+                        const SizedBox(height: 18),
+
+                        // RECENT CLASSES
+                        _sectionHeading('Recent Classes'),
+
+                        const SizedBox(height: 8),
+
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: s.recentclasses.length,
+                          itemBuilder: (context, index) {
+                            return _classTile(
+                              isstarted: s.startattendance,
+                              playbutton: Icons.play_arrow,
+                              icon: Icons.check_circle,
+                              subtitle:
+                                  '${DateFormat('dd MMM yyyy, hh:mm a').format(DateTime.parse(s.recentclasses[index]["created_at"])).toUpperCase()}',
+                              title:
+                                  "Attendance Id ${s.recentclasses[index]["id"]} | ${subjectName}",
+                              status: 'Present',
+                              isUpcoming: false,
+                            );
+                          },
+                        ),
+
+                        const SizedBox(height: 18),
+
+                        // SCAN QR BUTTON
                       ],
                     ),
                   ),
-
-                  const SizedBox(height: 12),
-
-                  // // QUICK ACTIONS
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: _quickAction(
-                  //         'Class Schedule',
-                  //         Icons.event_available,
-                  //         Colors.blue,
-                  //         const Color(0xFFE6F0FF),
-                  //       ),
-                  //     ),
-                  //     const SizedBox(width: 5),
-                  //     Expanded(
-                  //       child: _quickAction(
-                  //         'Study Material',
-                  //         Icons.menu_book,
-                  //         Colors.deepPurple,
-                  //         const Color(0xFFF0E9FF),
-                  //       ),
-                  //     ),
-                  //     const SizedBox(width: 5),
-                  //     Expanded(
-                  //       child: _quickAction(
-                  //         'Assignments',
-                  //         Icons.assignment,
-                  //         Colors.orange,
-                  //         const Color(0xFFFFF2D9),
-                  //       ),
-                  //     ),
-                  //     const SizedBox(width: 5),
-                  //     Expanded(
-                  //       child: _quickAction(
-                  //         'Attendance History',
-                  //         Icons.bar_chart,
-                  //         Colors.green,
-                  //         const Color(0xFFE4FAF0),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  const SizedBox(height: 18),
-
-                  // UPCOMING CLASS
-                  _sectionHeading('Upcoming Class'),
-
-                  const SizedBox(height: 8),
-
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: s.upcomingclasses.length > 3
-                        ? 3
-                        : s.upcomingclasses.length,
-                    itemBuilder: (context, index) {
-                      return _classTile(
-                        isstarted: s.startattendance,
-                        playbutton: Icons.play_arrow,
-                        ontap: () {},
-                        icon: Icons.event_available,
-                        title:
-                            "Attendance Id ${s.upcomingclasses[index]["id"]} | ${subjectName}",
-                        subtitle:
-                            '${DateFormat('dd MMM yyyy, hh:mm a').format(DateTime.parse(s.upcomingclasses[index]["created_at"])).toUpperCase()}',
-                        status:
-                            'Duration ${s.upcomingclasses[index]["duration"]} Sec',
-                        isUpcoming: true,
-                      );
-                    },
-                  ),
-
-                  const SizedBox(height: 18),
-
-                  // RECENT CLASSES
-                  _sectionHeading('Recent Classes'),
-
-                  const SizedBox(height: 8),
-
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: s.upcomingclasses.length,
-                    itemBuilder: (context, index) {
-                      return _classTile(
-                        isstarted: s.startattendance,
-                        playbutton: Icons.play_arrow,
-                        icon: Icons.check_circle,
-                        subtitle:
-                            '${DateFormat('dd MMM yyyy, hh:mm a').format(DateTime.parse(s.upcomingclasses[index]["created_at"])).toUpperCase()}',
-                        title:
-                            "Attendance Id ${s.upcomingclasses[index]["id"]} | ${subjectName}",
-                        status: 'Present',
-                        isUpcoming: false,
-                      );
-                    },
-                  ),
-
-                  const SizedBox(height: 18),
-
-                  // SCAN QR BUTTON
-                ],
-              ),
-            ),
-          ),
+                ),
         );
       },
     );
@@ -410,6 +425,7 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
   // CLASS TILE
   Widget _classTile({
     required IconData icon,
+    bool? isrecent,
     IconData? playbutton,
     required String title,
     required String subtitle,

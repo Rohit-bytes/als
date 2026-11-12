@@ -108,9 +108,10 @@ class SubjectController extends GetxController {
   }
 
   Map<String, dynamic> singlesubjectdata = {};
-
+  bool singlesubjectdataloading = false;
   Future<void> fetchsubject(int subjectid) async {
     try {
+      singlesubjectdataloading = true;
       final subjectdata = await supabase
           .from('subject')
           .select()
@@ -123,6 +124,9 @@ class SubjectController extends GetxController {
       update();
     } catch (e) {
       print(e);
+    } finally {
+      singlesubjectdataloading = false;
+      update();
     }
   }
 
@@ -287,10 +291,10 @@ class SubjectController extends GetxController {
     }
   }
 
-  Timer? _timer;
   int remainingSeconds = 0;
+  Timer? _timer;
 
-  void startDurationTimer(dynamic duration) {
+  void startDurationTimer(dynamic duration, String attendanceid) {
     _timer?.cancel();
 
     remainingSeconds = int.tryParse(duration.toString()) ?? 0;
@@ -298,11 +302,23 @@ class SubjectController extends GetxController {
 
     if (remainingSeconds <= 0) return;
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (remainingSeconds > 0) {
         remainingSeconds--;
+
+        try {
+          await supabase
+              .from('start_attendance')
+              .update({'duration': remainingSeconds})
+              .eq('id', attendanceid);
+        } catch (e) {
+          print("Timer database error: $e");
+        }
+
         update();
-      } else {
+      }
+
+      if (remainingSeconds <= 0) {
         timer.cancel();
       }
     });
@@ -318,6 +334,24 @@ class SubjectController extends GetxController {
 
   //show upcoming attendance of student
   List<Map<String, dynamic>> upcomingclasses = [];
+  late final RealtimeChannel upcomingclasseschannel;
+
+  void listenToUpcomingClasses(int subjectid) {
+    upcomingclasseschannel = supabase
+        .channel('upcoming_classes_$subjectid')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: 'public',
+          table: 'start_attendance',
+          callback: (payload) {
+            print("Upcoming classes changed: ${payload.eventType}");
+
+            fetchupcomingclasses(subjectid);
+          },
+        )
+        .subscribe();
+  }
+
   bool isloadingupcomingclasses = false;
   Future<void> fetchupcomingclasses(int subjectid) async {
     try {
@@ -326,12 +360,38 @@ class SubjectController extends GetxController {
           .from('start_attendance')
           .select()
           .eq('subject_id', subjectid)
+          .gt('duration', 0)
+          // .eq("date", DateTime.now())
           .order('created_at', ascending: false);
+
       print(upcomingclasses);
       upcomingclasses = response;
       update();
     } catch (e) {
       print("Error in fetching upcoming classes $e");
+    } finally {
+      isloadingupcomingclasses = false;
+      update();
+    }
+  }
+
+  List<Map<String, dynamic>> recentclasses = [];
+  Future<void> fetchrecentclasses(int subjectid) async {
+    try {
+      isloadingupcomingclasses = true;
+      final response = await supabase
+          .from('start_attendance')
+          .select()
+          .eq('subject_id', subjectid)
+          .eq('duration', 0)
+          // .lt("date", DateTime.now())
+          .order('created_at', ascending: false);
+
+      print(upcomingclasses);
+      recentclasses = response;
+      update();
+    } catch (e) {
+      print("Error in fetching recent classes $e");
     } finally {
       isloadingupcomingclasses = false;
       update();

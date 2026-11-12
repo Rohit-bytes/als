@@ -40,6 +40,7 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
       if (subjectController.startAttendance.isNotEmpty) {
         subjectController.startDurationTimer(
           subjectController.startAttendance['duration'],
+          attendanceid,
         );
       }
     });
