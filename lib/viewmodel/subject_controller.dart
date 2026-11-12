@@ -337,4 +337,22 @@ class SubjectController extends GetxController {
       update();
     }
   }
+
+  bool startattendance = false;
+
+  bool scanattendancebutton(DateTime datetime, int duration) {
+    final now = DateTime.now();
+
+    final elapsedSeconds = now.difference(datetime).inSeconds;
+
+    if (elapsedSeconds >= 0 && elapsedSeconds < duration) {
+      startattendance = true;
+    } else {
+      startattendance = false;
+    }
+
+    update();
+
+    return startattendance;
+  }
 }

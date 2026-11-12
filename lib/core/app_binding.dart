@@ -1,3 +1,4 @@
+import 'package:als/viewmodel/attendance_controller.dart';
 import 'package:als/viewmodel/auth_controller.dart';
 import 'package:als/viewmodel/home_controller.dart';
 import 'package:als/viewmodel/subject_controller.dart';
@@ -12,5 +13,6 @@ class AppBindings extends Bindings {
     Get.put<AuthController>(AuthController(), permanent: true);
     Get.put<HomeController>(HomeController(), permanent: true);
     Get.put<SubjectController>(SubjectController(), permanent: true);
+    Get.put<AttendanceController>(AttendanceController(), permanent: true);
   }
 }

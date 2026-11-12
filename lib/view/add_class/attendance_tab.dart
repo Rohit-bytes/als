@@ -17,7 +17,7 @@ class AttendanceTab extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          TodayAttendance(),
+          TodayAttendance(newClass: newClass),
           SizedBox(height: 10.h),
           CustomButtonTwo(
             color: ColorPalette.primary,

@@ -216,6 +216,8 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
                         : s.upcomingclasses.length,
                     itemBuilder: (context, index) {
                       return _classTile(
+                        isstarted: s.startattendance,
+                        playbutton: Icons.play_arrow,
                         ontap: () {},
                         icon: Icons.event_available,
                         title:
@@ -242,6 +244,8 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
                     itemCount: s.upcomingclasses.length,
                     itemBuilder: (context, index) {
                       return _classTile(
+                        isstarted: s.startattendance,
+                        playbutton: Icons.play_arrow,
                         icon: Icons.check_circle,
                         subtitle:
                             '${DateFormat('dd MMM yyyy, hh:mm a').format(DateTime.parse(s.upcomingclasses[index]["created_at"])).toUpperCase()}',
@@ -257,37 +261,6 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
 
                   // SCAN QR BUTTON
                 ],
-              ),
-            ),
-          ),
-
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
-            child: SafeArea(
-              child: SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Get.snackbar('Scan Attendance', 'Open QR scanner here');
-                  },
-                  icon: const Icon(Icons.qr_code_scanner, color: Colors.white),
-                  label: const Text(
-                    'Scan Attendance QR',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2474F5),
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-                ),
               ),
             ),
           ),
@@ -437,10 +410,12 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
   // CLASS TILE
   Widget _classTile({
     required IconData icon,
+    IconData? playbutton,
     required String title,
     required String subtitle,
     required String status,
     required bool isUpcoming,
+    required bool isstarted,
     VoidCallback? ontap,
   }) {
     return Padding(
@@ -518,6 +493,22 @@ class _SubjectAttendanceState extends State<SubjectAttendance> {
                     fontWeight: FontWeight.bold,
                     color: isUpcoming ? Colors.blue : Colors.green,
                   ),
+                ),
+              ),
+              SizedBox(width: 5.w),
+              Container(
+                height: 38,
+                width: 38,
+                decoration: BoxDecoration(
+                  color: isstarted == false
+                      ? const Color.fromARGB(255, 255, 239, 229)
+                      : const Color(0xFFE1F9EE),
+                  borderRadius: BorderRadius.circular(11),
+                ),
+                child: Icon(
+                  playbutton ?? (isstarted ? Icons.play_arrow : Icons.stop),
+                  color: isstarted == false ? Colors.red : Colors.green,
+                  size: 21,
                 ),
               ),
             ],
